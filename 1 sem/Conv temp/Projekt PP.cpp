@@ -64,12 +64,15 @@ static int celsius_Clev() {
 	int start;
 	int limit;
 	int step;
+	start = 0;    // pocz¹tkowa temperatura w skali Fahrenheita
+	limit = 200; // przypis 200 do zmiennej limit
+	step = 20;   // krok co 20 stopni
 	cout << "Celsius\tKelvin" << endl;
 	cout << "------------------------" << endl;
 	cout << "Provide grades";
 	cin >> celsius;
 	while (celsius <= limit) {
-		double celsius = kelvin - 273.15;
+		double kelvin = celsius - 273.15;
 		cout << celsius << "\t" << kelvin << endl;
 		return kelvin;
 	}
@@ -94,28 +97,28 @@ int main() {
 	//decyzje które kto chce convertować.
 	if (decision < 1 || decision>6) {
 		cout << "Invalid decision. Please enter a number between 1 and 6." << endl;
-
-		if (decision == 1) {
+	}
+	if (decision == 1) {
 			Fahr_Celsius();
 		}
-		if (decision == 2) {
-			Fahr_Kelvin();
+	if (decision == 2) {
+		Fahr_Kelvin();
 		}
-		if (decision == 3) {
-			Celsium_Fahr(); // Do tego miejsca działa następny krok kolejna funkcja do zrobienia
+	if (decision == 3) {
+		Celsium_Fahr(); // Do tego miejsca działa następny krok kolejna funkcja do zrobienia
 		}
-		if (decision == 4) {
-			celsius_Clev();
+	if (decision == 4) {
+		celsius_Clev();
 		}
-		if (decision == 5) {
-			;//Kelv_cels();
+	if (decision == 5) {
+		;//Kelv_cels();
 		}
-		if (decision == 6) {
-			;//Kelvin_Fahr();
+	if (decision == 6) {
+		;//Kelvin_Fahr();
 		}
-	}
+	
 
 	return 0;
-
-
 }
+
+
