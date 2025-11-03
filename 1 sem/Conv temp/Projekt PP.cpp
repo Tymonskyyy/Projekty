@@ -20,7 +20,7 @@ static int Fahr_Celsius() {
 	}
 	return 0;
 
-}
+} //Działa//Działa
 static int Fahr_Kelvin() {
 	int fahr, kelvin;
 	int start, limit, step;
@@ -33,13 +33,13 @@ static int Fahr_Kelvin() {
 	limit = 200; // przypis 200 do zmiennej limit
 	step = 20;   // krok co 20 stopni
 	while (fahr <= limit) {
-		double kelvin = (fahr - 32) * 5.0 / 9.0 + 273.15;
+		double kelvin = (fahr +459.67)*5.0/9.0;
 		cout << fahr << "\t" << kelvin << endl;
 		return kelvin;
 	}
 	return 0;
 
-}
+}//Działa
 static int Celsium_Fahr() {
 	int fahr, celsius; // deklaracja zmiennych
 	int start, limit, step; // deklaracja zmiennych
@@ -57,7 +57,7 @@ static int Celsium_Fahr() {
 
 	}
 	return 0;
-}
+}//Działa
 static int celsius_Clev() {
 	int celsius;
 	int kelvin;
@@ -72,10 +72,45 @@ static int celsius_Clev() {
 	cout << "Provide grades";
 	cin >> celsius;
 	while (celsius <= limit) {
-		double kelvin = celsius - 273.15;
+		double kelvin = celsius + 273.15;
 		cout << celsius << "\t" << kelvin << endl;
 		return kelvin;
 	}
+	return 0;
+}
+static int Kelv_cels() {
+	int kelvin, celsius;
+	int start, limit, step;
+	cout << "Kelvin\tCelsius" << endl;
+	cout << "------------------------" << endl;
+	cout << "Provide grades";
+	cin >> kelvin;
+	start = 0;    // pocz¹tkowa temperatura w skali Fahrenheita
+	limit = 200; // przypis 200 do zmiennej limit
+	step = 20;   // krok co 20 stopni
+	while (kelvin <= limit) {
+		double celsius = kelvin - 273.15;
+		cout << kelvin << "\t" << celsius << endl;
+		return celsius;
+	}
+	return 0;
+}
+static int Kelvin_Fahr() {
+	int kelvin, fahr;
+	int start, limit, step;
+	cout << "Kelvin\tFahrenheit" << endl;
+	cout << "------------------------" << endl;
+	cout << "Provide grades";
+	cin >> kelvin;
+	start = 0;    // pocz¹tkowa temperatura w skali Fahrenheita
+	limit = 200; // przypis 200 do zmiennej limit
+	step = 20;   // krok co 20 stopni
+	while (kelvin <= limit) {
+		double fahr = kelvin *9.0/5.0 - 459.67;
+		cout << kelvin << "\t" << fahr << endl;
+		return fahr;
+	}
+
 	return 0;
 }
 int main() {
@@ -96,27 +131,28 @@ int main() {
 	cin >> decision; // pobranie decyzji od u¿ytkownika
 	//decyzje które kto chce convertować.
 	if (decision < 1 || decision>6) {
-		cout << "Invalid decision. Please enter a number between 1 and 6." << endl;
+		cout << "Invalid decision. Please enter a number between 1 and 6." << endl; // obsluga blednej decyzji
+		return 1;
 	}
 	if (decision == 1) {
-			Fahr_Celsius();
-		}
+		Fahr_Celsius();
+	}
 	if (decision == 2) {
 		Fahr_Kelvin();
-		}
+	}
 	if (decision == 3) {
-		Celsium_Fahr(); // Do tego miejsca działa następny krok kolejna funkcja do zrobienia
-		}
+		Celsium_Fahr();
+	}
 	if (decision == 4) {
 		celsius_Clev();
-		}
+	}
 	if (decision == 5) {
-		;//Kelv_cels();
-		}
+		Kelv_cels();
+	}
 	if (decision == 6) {
-		;//Kelvin_Fahr();
-		}
-	
+		Kelvin_Fahr();
+	}
+
 
 	return 0;
 }
