@@ -58,6 +58,23 @@ static int Celsium_Fahr() {
 	}
 	return 0;
 }
+static int celsius_Clev() {
+	int celsius;
+	int kelvin;
+	int start;
+	int limit;
+	int step;
+	cout << "Celsius\tKelvin" << endl;
+	cout << "------------------------" << endl;
+	cout << "Provide grades";
+	cin >> celsius;
+	while (celsius <= limit) {
+		double celsius = kelvin - 273.15;
+		cout << celsius << "\t" << kelvin << endl;
+		return kelvin;
+	}
+	return 0;
+}
 int main() {
 	int fahr, celsius, kelvin; //deklaracja zmiennych
 	int start, limit, step;	//	deklaracja zmiennych
@@ -75,36 +92,30 @@ int main() {
 	cout << "Enter your decision (1-6): ";
 	cin >> decision; // pobranie decyzji od u¿ytkownika
 	//decyzje które kto chce convertować.
-	if (decision == 1) {
-		Fahr_Celsius();
-	}
-	if (decision == 2) {
-		Fahr_Kelvin();
-	}
-	if (decision == 3) {
-		Celsium_Fahr(); // Do tego miejsca działa następny krok kolejna funkcja do zrobienia
-	}
-	if (decision == 4) {
-		;//celsius_Celv();
-	}
-	if (decision == 5) {
-		;//Kelv_cels();
-	}
-	if (decision == 6) {
-		;//Kelvin_Fahr();
-	}
+	if (decision < 1 || decision>6) {
+		cout << "Invalid decision. Please enter a number between 1 and 6." << endl;
 
+		if (decision == 1) {
+			Fahr_Celsius();
+		}
+		if (decision == 2) {
+			Fahr_Kelvin();
+		}
+		if (decision == 3) {
+			Celsium_Fahr(); // Do tego miejsca działa następny krok kolejna funkcja do zrobienia
+		}
+		if (decision == 4) {
+			celsius_Clev();
+		}
+		if (decision == 5) {
+			;//Kelv_cels();
+		}
+		if (decision == 6) {
+			;//Kelvin_Fahr();
+		}
+	}
 
 	return 0;
 
-	/*
-int fahr = 0;
-int celsius = 0;
-int start = 0;
-int limit =0;
-int step = 0;
-cout << "Fahrenheit\tCelsius" << endl;
-Fahr_Celsius();
-return 0;
-*/
+
 }
