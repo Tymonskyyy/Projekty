@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <stdlib.h>
 using namespace std;
 static int Fahr_Celsius() {
 	int fahr, celsius;
@@ -19,7 +20,10 @@ static int Fahr_Celsius() {
 		return celsius;
 	}
 	return 0;
-
+	/*if celsius < -273.15{
+		cout << "Error: Temperature below absolute zero!" << endl;
+	}
+	*/
 } //Działa//Działa
 static int Fahr_Kelvin() {
 	int fahr, kelvin;
@@ -38,7 +42,11 @@ static int Fahr_Kelvin() {
 		return kelvin;
 	}
 	return 0;
-
+	/*
+	if kelvin < 0{
+		cout << "Error: Temperature below absolute zero!" << endl;
+		
+	}*/
 }//Działa
 static int Celsium_Fahr() {
 	int fahr, celsius; // deklaracja zmiennych
@@ -57,8 +65,12 @@ static int Celsium_Fahr() {
 
 	}
 	return 0;
+	/*
+	if fahr < -459.67 {
+		cout << "Error: Temperature below absolute zero!" << endl;*/
+	//}
 }//Działa
-static int celsius_Clev() {
+static int Celsius_Kelv() {
 	int celsius;
 	int kelvin;
 	int start;
@@ -77,10 +89,16 @@ static int celsius_Clev() {
 		return kelvin;
 	}
 	return 0;
+	/*
+	if kelvin < 0 {
+		cout << "Error: Temperature below absolute zero!" << endl;
+		*/
+	//}
 }
 static int Kelv_cels() {
 	int kelvin, celsius;
 	int start, limit, step;
+	int ending;
 	cout << "Kelvin\tCelsius" << endl;
 	cout << "------------------------" << endl;
 	cout << "Provide grades";
@@ -92,6 +110,15 @@ static int Kelv_cels() {
 		double celsius = kelvin - 273.15;
 		cout << kelvin << "\t" << celsius << endl;
 		return celsius;
+	}
+	cout << "That's it?" << endl;
+	cin >> ending;
+	if (ending == 'N') {
+		return 0;
+	}
+	if (ending == 'T') {
+		cout << "Goodbye!" << endl;
+
 	}
 	return 0;
 }
@@ -114,47 +141,57 @@ static int Kelvin_Fahr() {
 	return 0;
 }
 int main() {
-	int fahr, celsius, kelvin; //deklaracja zmiennych
-	int start, limit, step;	//	deklaracja zmiennych
+	int prime = 1;
+	while (prime == 1) {
+		int fahr, celsius, kelvin; //deklaracja zmiennych
+		int start, limit, step;	//	deklaracja zmiennych
 
-	int decision; // deklaracja zmiennej decyzji
-	cout << "Convert temperature" << endl;
-	cout << "------------------------" << endl;
-	cout << "What temperature do you want to convert?" << endl;
-	cout << "1. Fahrenheit to Celsius" << endl;
-	cout << "2. Fahrenheit to Kelvin" << endl;
-	cout << "3.Celsius to Fahrenheit" << endl;
-	cout << "4.Celsius to Kelvin" << endl;
-	cout << "5.Kelvin to celsius" << endl;
-	cout << "6.Kelvin to Fahrenheit" << endl;
-	cout << "Enter your decision (1-6): ";
-	cin >> decision; // pobranie decyzji od u¿ytkownika
-	//decyzje które kto chce convertować.
-	if (decision < 1 || decision>6) {
-		cout << "Invalid decision. Please enter a number between 1 and 6." << endl; // obsluga blednej decyzji
-		return 1;
-	}
-	if (decision == 1) {
-		Fahr_Celsius();
-	}
-	if (decision == 2) {
-		Fahr_Kelvin();
-	}
-	if (decision == 3) {
-		Celsium_Fahr();
-	}
-	if (decision == 4) {
-		celsius_Clev();
-	}
-	if (decision == 5) {
-		Kelv_cels();
-	}
-	if (decision == 6) {
-		Kelvin_Fahr();
-	}
+		int decision; // deklaracja zmiennej decyzji
+		cout << "Convert temperature" << endl;
+		cout << "------------------------" << endl;
+		cout << "What temperature do you want to convert?" << endl;
+		cout << "1. Fahrenheit to Celsius" << endl;
+		cout << "2. Fahrenheit to Kelvin" << endl;
+		cout << "3.Celsius to Fahrenheit" << endl;
+		cout << "4.Celsius to Kelvin" << endl;
+		cout << "5.Kelvin to celsius" << endl;
+		cout << "6.Kelvin to Fahrenheit" << endl;
+		cout << "7.Clean Screen" << endl;
+		cout << "8.Exit" << endl;
+		cout << "------------------------" << endl;
+		cout << "Enter your decision (1-6): ";
+		cin >> decision; // pobranie decyzji od u¿ytkownika
+		//decyzje które kto chce convertować.
+		switch (decision) {
+		case 1:
+			Fahr_Celsius();
+			break;
+		case 2:
+			Fahr_Kelvin();
+			break;
+		case 3:
+			Celsium_Fahr();
+			break;
+		case 4:
+			Celsius_Kelv();
+			break;
+		case 5:
+			Kelv_cels();
+			break;
+		case 6:
+			Kelvin_Fahr();
+			break;
+		case 7:
+			system("cls");
+			break;
 
 
+		case 8:
+			cout << "Goodbye!" << endl;
+			prime = 0;
+			break;
+
+		}
+	}
 	return 0;
 }
-
-
