@@ -1,6 +1,44 @@
 ﻿#include <iostream>
 #include <stdlib.h>
 using namespace std;
+static int Check(float temp,char stopnie) {
+	if (decision == 1) {
+		if (temp < -459.67) {
+			cout << "Error: Temperature below absolute zero!" << endl;
+			return 1;
+		}
+	}
+	else if (decision == 2) {
+		if (temp < 0) {
+			cout << "Error: Temperature below absolute zero!" << endl;
+			return 1;
+		}
+	}
+	else if (decision == 3) {
+		if (temp < -273.15) {
+			cout << "Error: Temperature below absolute zero!" << endl;
+			return 1;
+		}
+	}
+	else if (decision == 4) {
+		if (temp < 0) {
+			cout << "Error: Temperature below absolute zero!" << endl;
+			return 1;
+		}
+	}
+	else if (decision == 5) {
+		if (temp < -273.15) {
+			cout << "Error: Temperature below absolute zero!" << endl;
+			return 1;
+		}
+	}
+	else if (decision == 6) {
+		if (temp < 0) {
+			cout << "Error: Temperature below absolute zero!" << endl;
+			return 1;
+		}
+	}
+}
 static int Fahr_Celsius() {
 	int fahr, celsius;
 	int start, limit, step;
@@ -10,7 +48,7 @@ static int Fahr_Celsius() {
 	cout << "Provide grades";
 	cin >> fahr;
 
-	start = 0;    // pocz¹tkowa temperatura w skali Fahrenheita
+	start = 0;    // poczatkowa temperatura w skali Fahrenheita
 	limit = 200; // przypis 200 do zmiennej limit
 	step = 20;   // krok co 20 stopni
 	while (fahr <= limit) {
@@ -33,7 +71,7 @@ static int Fahr_Kelvin() {
 	cout << "------------------------" << endl;
 	cout << "Provide grades";
 	cin >> fahr;
-	start = 0;    // pocz¹tkowa temperatura w skali Fahrenheita
+	start = 0;    // poczatkowa temperatura w skali Fahrenheita
 	limit = 200; // przypis 200 do zmiennej limit
 	step = 20;   // krok co 20 stopni
 	while (fahr <= limit) {
@@ -55,7 +93,7 @@ static int Celsium_Fahr() {
 	cout << "------------------------" << endl;
 	cout << "Provide grades";
 	cin >> celsius;
-	start = 0;    // pocz¹tkowa temperatura w skali Fahrenheita
+	start = 0;    // poczatkowa temperatura w skali Fahrenheita
 	limit = 200; // przypis 200 do zmiennej limit
 	step = 20;   // krok co 20 stopni
 	while (celsius <= limit) { // pêtla while
@@ -76,7 +114,7 @@ static int Celsius_Kelv() {
 	int start;
 	int limit;
 	int step;
-	start = 0;    // pocz¹tkowa temperatura w skali Fahrenheita
+	start = 0;    // poczatkowa temperatura w skali Fahrenheita
 	limit = 200; // przypis 200 do zmiennej limit
 	step = 20;   // krok co 20 stopni
 	cout << "Celsius\tKelvin" << endl;
@@ -103,7 +141,7 @@ static int Kelv_cels() {
 	cout << "------------------------" << endl;
 	cout << "Provide grades";
 	cin >> kelvin;
-	start = 0;    // pocz¹tkowa temperatura w skali Fahrenheita
+	start = 0;    // poczatkowa temperatura w skali Fahrenheita
 	limit = 200; // przypis 200 do zmiennej limit
 	step = 20;   // krok co 20 stopni
 	while (kelvin <= limit) {
@@ -111,15 +149,7 @@ static int Kelv_cels() {
 		cout << kelvin << "\t" << celsius << endl;
 		return celsius;
 	}
-	cout << "That's it?" << endl;
-	cin >> ending;
-	if (ending == 'N') {
-		return 0;
-	}
-	if (ending == 'T') {
-		cout << "Goodbye!" << endl;
 
-	}
 	return 0;
 }
 static int Kelvin_Fahr() {
@@ -129,7 +159,7 @@ static int Kelvin_Fahr() {
 	cout << "------------------------" << endl;
 	cout << "Provide grades";
 	cin >> kelvin;
-	start = 0;    // pocz¹tkowa temperatura w skali Fahrenheita
+	start = 0;    // poczatkowa temperatura w skali Fahrenheita
 	limit = 200; // przypis 200 do zmiennej limit
 	step = 20;   // krok co 20 stopni
 	while (kelvin <= limit) {
