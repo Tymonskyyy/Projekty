@@ -1,44 +1,6 @@
 ﻿#include <iostream>
 #include <stdlib.h>
 using namespace std;
-static int Check(float temp,char stopnie) {
-	if (decision == 1) {
-		if (temp < -459.67) {
-			cout << "Error: Temperature below absolute zero!" << endl;
-			return 1;
-		}
-	}
-	else if (decision == 2) {
-		if (temp < 0) {
-			cout << "Error: Temperature below absolute zero!" << endl;
-			return 1;
-		}
-	}
-	else if (decision == 3) {
-		if (temp < -273.15) {
-			cout << "Error: Temperature below absolute zero!" << endl;
-			return 1;
-		}
-	}
-	else if (decision == 4) {
-		if (temp < 0) {
-			cout << "Error: Temperature below absolute zero!" << endl;
-			return 1;
-		}
-	}
-	else if (decision == 5) {
-		if (temp < -273.15) {
-			cout << "Error: Temperature below absolute zero!" << endl;
-			return 1;
-		}
-	}
-	else if (decision == 6) {
-		if (temp < 0) {
-			cout << "Error: Temperature below absolute zero!" << endl;
-			return 1;
-		}
-	}
-}
 static int Fahr_Celsius() {
 	int fahr, celsius;
 	int start, limit, step;
