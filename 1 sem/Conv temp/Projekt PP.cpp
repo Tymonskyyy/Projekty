@@ -195,6 +195,15 @@ using namespace std; //Check_temp function to verify temperature above absolute 
 
 		return 0;
 	}
+	static int History() {
+		int table[100];
+		
+
+		double dataCounter = 0;
+
+		return 0;
+	}
+
 	int main() {
 		int prime = 1;
 		while (prime == 1) {
@@ -212,7 +221,8 @@ using namespace std; //Check_temp function to verify temperature above absolute 
 			cout << "5.Kelvin to celsius" << endl;
 			cout << "6.Kelvin to Fahrenheit" << endl;
 			cout << "7.Clean Screen" << endl;
-			cout << "8.Exit" << endl;
+			cout << "8.History" << endl;
+			cout << "9.Exit" << endl;
 			cout << "------------------------" << endl;
 			cout << "Enter your decision (1-6): ";
 			cin >> decision; // pobranie decyzji od u¿ytkownika
@@ -245,9 +255,11 @@ using namespace std; //Check_temp function to verify temperature above absolute 
 			case 7:
 				system("cls");
 				break;
-
-
 			case 8:
+				cout << "History function is not implemented yet." << endl;
+				break;
+
+			case 9:
 				cout << "Goodbye!" << endl;
 				prime = 0;
 				break;
