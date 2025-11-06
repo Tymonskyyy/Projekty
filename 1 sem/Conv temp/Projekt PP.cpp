@@ -1,7 +1,7 @@
 ﻿	#include <iostream>
 	#include <stdlib.h>
 	using namespace std;
-	static void Check_temp(int decision) {
+	static bool Check_temp(int decision) {
 		int Fahr_Celsius(int fahr);
 		int Fahr_Kelvin(int fahr);
 		int Celsium_Fahr(int celsius);
@@ -16,9 +16,9 @@
 			cin >> fahr;
 			if (fahr < -459.67) {
 				cout << "Error: Temperature below absolute zero!" << endl;
-				break;
+				return false;
 			}
-			break;
+
 		case 2:
 			int fahr2;
 			cout << "Provide temperature in Fahrenheit: ";
@@ -26,7 +26,8 @@
 			if (fahr2 < -459.67) {
 				cout << "Error: Temperature below absolute zero!" << endl;
 			}
-			break;
+			
+			return false;
 		case 3:
 			int celsius;
 			cout << "Provide temperature in Celsius: ";
@@ -34,7 +35,7 @@
 			if (celsius < -273.15) {
 				cout << "Error: Temperature below absolute zero!" << endl;
 			}
-			break;
+			return false;
 		case 4:
 			int celsius2;
 			cout << "Provide temperature in Celsius: ";
@@ -42,7 +43,7 @@
 			if (celsius2 < -273.15) {
 				cout << "Error: Temperature below absolute zero!" << endl;
 			}
-			break;
+			return false;
 		case 5:
 			int kelvin;
 			cout << "Provide temperature in Kelvin: ";
@@ -50,7 +51,7 @@
 			if (kelvin < 0) {
 				cout << "Error: Temperature below absolute zero!" << endl;
 			}
-			break;
+			return false;
 		case 6:
 			int kelvin2;
 			cout << "Provide temperature in Kelvin: ";
@@ -58,7 +59,7 @@
 			if (kelvin2 < 0) {
 				cout << "Error: Temperature below absolute zero!" << endl;
 			}
-			break;
+			return false;
 
 		}
 	}
@@ -74,6 +75,7 @@
 		start = 0;    // poczatkowa temperatura w skali Fahrenheita
 		limit = 200; // przypis 200 do zmiennej limit
 		step = 20;   // krok co 20 stopni
+		Check_temp(1);
 		while (fahr <= limit) {
 
 			double celsius = (fahr - 32) * 5.0 / 9.0;
