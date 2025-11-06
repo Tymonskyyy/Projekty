@@ -1,6 +1,6 @@
 ﻿	#include <iostream>
 	#include <stdlib.h>
-	using namespace std;
+using namespace std; //Check_temp function to verify temperature above absolute zero is the end version
 	static bool Check_temp(int decision) {
 		int Fahr_Celsius(int fahr);
 		int Fahr_Kelvin(int fahr);
