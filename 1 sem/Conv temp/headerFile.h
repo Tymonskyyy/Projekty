@@ -2,7 +2,7 @@
 using std::cout;
 using std::cin;
 using std::endl;
-int g_table_history[100][2]; // tablica do przechowywania historii konwersji
+double g_table_history[100][2]; // tablica do przechowywania historii konwersji
 int g_Data_Center = 0; // zmienna do przechowywania liczby wpisów w historii
 void Memory_History(double result, int unit_code) { //Archiwista zapisujący historię świata
 
@@ -18,45 +18,57 @@ void Memory_History(double result, int unit_code) { //Archiwista zapisujący his
 
 	}
 }
-void Show_History() { // Telewizor do wyświetlania 
+static void Show_History(int filter_code) { // Telewizor do wyświetlania 
 	cout << "Conversion History:" << endl; // nagłówek historii
 	if (g_Data_Center == 0) { // sprawdzanie czy historia jest pusta
 		cout << "No entries in history." << endl;
+		return;
 	}
-	else {
-		for (int i = 0; i < g_Data_Center; i++) { // Pętlka jęzeli coś jest w hitsorii to wypisz na ekranie
+	bool found_enteries = false; //zmienna do sprawdzania czy znaleziono wpisy
 
-			double result = g_table_history[i][0]; // pobieranie wyniku z historii
 
-			int	unit_code = g_table_history[i][1]; // pobieranie kodu jednostki z historii
+	for (int i = 0; i < g_Data_Center; i++) { // Pętlka jęzeli coś jest w hitsorii to wypisz na ekranie
 
-			cout << "Entry " << i + 1 << ": "; // wyświetlanie numeru wpisu
+		double result = g_table_history[i][0]; // pobieranie wyniku z historii
+		int	unit_code = g_table_history[i][1]; // pobieranie kodu jednostki z historii
+
+		if (unit_code == filter_code || filter_code == 4) {
+			found_enteries = true; //znalezienie prawidłowego wpisu
+			cout << "Entry " << i + 1 << ": " << result; // wyświetlanie numeru wpisu
+
+
 
 			switch (unit_code) { //DO wyboru literki do tempperatyu
 			case 1:
-				cout << result << "C" << endl; //endl to nowa linia zaś cała linijka pokazuje wynik
-				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
+				cout << result  << "C" << endl; //endl to nowa linia zaś cała linijka pokazuje wynik
+				//cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
 				break;
 			case 2:
-				cout << result << "F" << endl;
-				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
+				cout << result  << "F" << endl;
+				//cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
 				break;
 			case 3:
 				cout << result << "K" << endl;
-				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
+				//cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
 				break;
 			case 4:
-				cout << result << "C" << endl;
-				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
+				cout << "C" << endl;
+				//cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
 				break;
 			default:
 				cout << "Unknown unit code" << endl;
 				break;
 
 			}
+
 		}
 	}
+		if (!found_enteries) {
+			cout << "No entries found for the specified filter." << endl;
+		}
+	
 }
+
 static bool Check_temp(double temp_value, int unit_type) { //Funkcja do sprawdzania czy temperatura nie jest ponizej zera absolutnego
 	int Fahr_Celsius(int fahr); //Deklaracja funkcji
 	int Fahr_Kelvin(int fahr); //Deklaracja funkcji
@@ -112,7 +124,7 @@ static bool Check_temp(double temp_value, int unit_type) { //Funkcja do sprawdza
 	return true; //Zwracanie prawdy jeśli temperatura jest powyżej zera absolutnego
 }
 static double Fahr_Celsius() {
-	int fahr, celsius;
+	double fahr, celsius;
 	int start, limit, step;
 
 	cout << "Fahrenheit\tCelsius" << endl;
@@ -135,7 +147,7 @@ static double Fahr_Celsius() {
 	return 0;
 } //Działa//Działa
 static double Fahr_Kelvin() {
-	int fahr, kelvin;
+	double fahr, kelvin;
 	int start, limit, step;
 
 	cout << "Fahrenheit\tKelvin" << endl;
@@ -161,7 +173,7 @@ static double Fahr_Kelvin() {
 	}*/
 }//Działa
 static double Celsium_Fahr() {
-	int fahr, celsius; // deklaracja zmiennych
+	double fahr, celsius; // deklaracja zmiennych
 	int start, limit, step; // deklaracja zmiennych
 	cout << "Celsium\tFahrenheit" << endl;
 	cout << "------------------------" << endl;
@@ -239,7 +251,7 @@ static double Kelv_cels() {
 	return 0;
 }
 static double Kelvin_Fahr() {
-	int kelvin, fahr;
+	double kelvin, fahr;
 	int start, limit, step;
 	cout << "Kelvin\tFahrenheit" << endl;
 	cout << "------------------------" << endl;

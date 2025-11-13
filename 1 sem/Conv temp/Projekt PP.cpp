@@ -85,10 +85,21 @@ using namespace std;  //Żeby nie pisac std::
 			case 7:
 				system("cls");
 				break;
-			case 8:	
-				Show_History();
+			case 8: {
+				int filter_choice = 4; //Wartość domyślna
+				cout << "Showing conversion history:" << endl;
+				cout << "Filter by unit type?" << endl;
+				cout << "1. Celsius" << endl;
+				cout << "2. Fahrenheit" << endl;
+				cout << "3. Kelvin" << endl;
+				cout << "4. Everything" << endl;
+				cout << "Enter your choice (1-4): ";
+				cin >> filter_choice;
+
+				Show_History(filter_choice);
 				break;
-			case -1:
+			}
+			case 9:
 				cout << "Goodbye!" << endl;
 				prime = 0;
 				break;
