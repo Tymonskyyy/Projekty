@@ -27,7 +27,7 @@ using namespace std;  //Żeby nie pisac std::
 			cout << "6.Kelvin to Fahrenheit" << endl;
 			cout << "7.Clean Screen" << endl;
 			cout << "8.History" << endl;
-			cout << "9.Exit" << endl;
+			cout << "-1.Exit" << endl;
 			cout << "------------------------" << endl;
 			cout << "Enter your decision (1-6): ";
 			cin >> decision; // pobranie decyzji od u¿ytkownika
@@ -88,7 +88,7 @@ using namespace std;  //Żeby nie pisac std::
 			case 8:	
 				Show_History();
 				break;
-			case 9:
+			case -1:
 				cout << "Goodbye!" << endl;
 				prime = 0;
 				break;

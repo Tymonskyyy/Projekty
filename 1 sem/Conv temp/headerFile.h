@@ -1,7 +1,7 @@
-﻿#pragma once
-#include <iostream>
-#include <stdlib.h>
-using namespace std;
+﻿
+using std::cout;
+using std::cin;
+using std::endl;
 int g_table_history[100][2]; // tablica do przechowywania historii konwersji
 int g_Data_Center = 0; // zmienna do przechowywania liczby wpisów w historii
 void Memory_History(double result, int unit_code) { //Archiwista zapisujący historię świata
@@ -77,39 +77,41 @@ static bool Check_temp(double temp_value, int unit_type) { //Funkcja do sprawdza
 	case 2:
 		if (temp_value < -459.67) {
 			cout << "Error: Temperature below absolute zero!" << endl;
+			return false;
 		}
 
-		return false;
+
 		break;
 
 	case 3:
 		if (temp_value < -273.15) {
 			cout << "Error: Temperature below absolute zero!" << endl;
+			return false;
 		}
-		return false;
+
 		break;
 	case 4:
 		if (temp_value < -273.15) {
 			cout << "Error: Temperature below absolute zero!" << endl;
 		}
-		return false;
+
 		break;
 	case 5:
 		if (temp_value < 0) {
 			cout << "Error: Temperature below absolute zero!" << endl;
+			return false;
 		}
-		return false; // zwracanie fałszu aby pokazać błąd
 		break; //Zawsze musi być break w switch
 	case 6:
 		if (temp_value < 0) {
 			cout << "Error: Temperature below absolute zero!" << endl;
+			return false;
 		}
-		return false; //Zwracanie fałszu jeśli temperatura jest poniżej zera absolutnego
 		break;	//Zawsze musi być break w switch
 	}
 	return true; //Zwracanie prawdy jeśli temperatura jest powyżej zera absolutnego
 }
-static int Fahr_Celsius() {
+static double Fahr_Celsius() {
 	int fahr, celsius;
 	int start, limit, step;
 
@@ -131,12 +133,8 @@ static int Fahr_Celsius() {
 		return celsius;
 	}
 	return 0;
-	/*if celsius < -273.15{
-		cout << "Error: Temperature below absolute zero!" << endl;
-	}
-	*/
 } //Działa//Działa
-static int Fahr_Kelvin() {
+static double Fahr_Kelvin() {
 	int fahr, kelvin;
 	int start, limit, step;
 
@@ -162,7 +160,7 @@ static int Fahr_Kelvin() {
 
 	}*/
 }//Działa
-static int Celsium_Fahr() {
+static double Celsium_Fahr() {
 	int fahr, celsius; // deklaracja zmiennych
 	int start, limit, step; // deklaracja zmiennych
 	cout << "Celsium\tFahrenheit" << endl;
@@ -188,7 +186,7 @@ static int Celsium_Fahr() {
 		cout << "Error: Temperature below absolute zero!" << endl;*/
 		//}
 }//Działa
-static int Celsius_Kelv() {
+static double Celsius_Kelv() {
 	int celsius;
 	int kelvin;
 	int start;
@@ -217,7 +215,7 @@ static int Celsius_Kelv() {
 		*/
 		//}
 }
-static int Kelv_cels() {
+static double Kelv_cels() {
 	int kelvin, celsius;
 	int start, limit, step;
 	int ending;
@@ -240,7 +238,7 @@ static int Kelv_cels() {
 
 	return 0;
 }
-static int Kelvin_Fahr() {
+static double Kelvin_Fahr() {
 	int kelvin, fahr;
 	int start, limit, step;
 	cout << "Kelvin\tFahrenheit" << endl;
