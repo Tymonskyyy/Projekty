@@ -1,6 +1,12 @@
 ﻿	#include <iostream>
 	#include <stdlib.h>
-using namespace std; //Check_temp function to verify temperature above absolute zero is the end version
+using namespace std; 
+double temperature_history[100][2]; // tablica do przechowywania historii konwersji
+char history_types[100];
+
+
+
+
 	static bool Check_temp(int decision) {
 		int Fahr_Celsius(int fahr);
 		int Fahr_Kelvin(int fahr);
@@ -195,15 +201,11 @@ using namespace std; //Check_temp function to verify temperature above absolute 
 
 		return 0;
 	}
-	static int History() {
-		int table[100];
-		
+/*	void int Memory_History() {
+		//funkcja do zapisywania historii konwersji
 
-		double dataCounter = 0;
 
-		return 0;
-	}
-
+	}*/
 	int main() {
 		int prime = 1;
 		while (prime == 1) {
@@ -255,9 +257,11 @@ using namespace std; //Check_temp function to verify temperature above absolute 
 			case 7:
 				system("cls");
 				break;
-			case 8:
+			/*case 8:
+				Show_History();
+
 				cout << "History function is not implemented yet." << endl;
-				break;
+				break;*/
 
 			case 9:
 				cout << "Goodbye!" << endl;
