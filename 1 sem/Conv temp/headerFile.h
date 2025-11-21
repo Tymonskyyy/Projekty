@@ -31,7 +31,7 @@ static void Show_History(int filter_code) { // Telewizor do wyświetlania
 
 		double result = g_table_history[i][0]; // pobieranie wyniku z historii
 		int	unit_code = g_table_history[i][1]; // pobieranie kodu jednostki z historii
-
+		int record_number = i + 1; // numer wpisu w historii
 		if (unit_code == filter_code || filter_code == 4) {
 			found_enteries = true; //znalezienie prawidłowego wpisu
 			cout << "Entry " << i + 1 << ": " << result; // wyświetlanie numeru wpisu
@@ -40,20 +40,21 @@ static void Show_History(int filter_code) { // Telewizor do wyświetlania
 
 			switch (unit_code) { //DO wyboru literki do tempperatyu
 			case 1:
-				cout << result  << "C" << endl; //endl to nowa linia zaś cała linijka pokazuje wynik
-				//cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
+				cout << record_number << ". ";
+				cout << record_number << result  << "C" << endl; //endl to nowa linia zaś cała linijka pokazuje wynik
+				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
 				break;
 			case 2:
 				cout << result  << "F" << endl;
-				//cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
+				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
 				break;
 			case 3:
 				cout << result << "K" << endl;
-				//cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
+				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
 				break;
 			case 4:
 				cout << "C" << endl;
-				//cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
+				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
 				break;
 			default:
 				cout << "Unknown unit code" << endl;
@@ -69,6 +70,10 @@ static void Show_History(int filter_code) { // Telewizor do wyświetlania
 	
 }
 
+static void Clear_History() { //Funkcja do czyszczenia historii
+	g_Data_Center = 0; //Ustawienie licznika wpisów na 0
+	cout << "History cleared." << endl; //Komunikat o wyczyszczeniu historii
+}
 static bool Check_temp(double temp_value, int unit_type) { //Funkcja do sprawdzania czy temperatura nie jest ponizej zera absolutnego
 	int Fahr_Celsius(int fahr); //Deklaracja funkcji
 	int Fahr_Kelvin(int fahr); //Deklaracja funkcji
