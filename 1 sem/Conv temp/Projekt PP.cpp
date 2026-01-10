@@ -9,7 +9,7 @@ using namespace std;  //Żeby nie pisac std::
 */
 
 int main() {
-	int prime = 1; //Żaby była rekurencja  (pętla nieskonczona)
+	int prime = 1; //Żaby była pętla nieskonczona
 	double result;
 	while (prime == 1) { //Pętla nieskończona
 		int fahr, celsius, kelvin; //deklaracja zmiennych
