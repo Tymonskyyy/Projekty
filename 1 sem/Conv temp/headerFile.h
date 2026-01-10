@@ -232,8 +232,8 @@ void deleteRecords() {
 		cout << "Enter the record number to delete (or 0 to cancel): ";
 		while (true) {
 			cin >> recordNumber;
-			if (recordNumber < 0 || recordNumber >= g_Data_Center /2) {
-				cout << "Invalid record number. Please try again: ";
+			if (recordNumber < 0 || recordNumber >= g_Data_Center / 2) { //Sprawdzanie czy numer rekordu jest prawidłowy
+				cout << "Invalid record number. Please try again: "; //Komunikat o błędzie
 				cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Ignoruj poprzednie wejście1
 			}
 			else {
@@ -241,9 +241,111 @@ void deleteRecords() {
 			}
 		}
 		//usuwanie rekordu
-		for (int i = (recordNumber * 2) - 2 ; i < g_Data_Center - 2; i++) {
-			g_table_history[i] = g_table_history[i + 2];
-			g_table_units[i] = g_table_units[i + 2];
+		for (int i = (recordNumber * 2) - 2; i < g_Data_Center - 2; i++) { // Przesuwanie wpisów historii
+			g_table_history[i] = g_table_history[i + 2]; // Przesuwanie wpisów historii
+			g_table_units[i] = g_table_units[i + 2]; // Przesuwanie jednostek
+		}
+		g_Data_Center -= 2; // Zmniejszenie liczby wpisów w historii
+		cout << "Record " << recordNumber << " deleted successfully." << endl;
+	}
+}
+void ModifyRecord() {
+	if (g_Data_Center == 0) {//Sprawdzanie czy historia jest pusta
+		cout << "No conversion records to modify." << endl; //Komunikat o braku wpisów
+	}
+	else {
+		show_All_History(); // Wyświetlanie całej historii
+
+		int recordNumber = 0; 
+		cout << "Enter the record number to modify (or 0 to cancel): ";
+		while (true) {
+			cin >> recordNumber;
+			if (recordNumber < 0 || recordNumber >= g_Data_Center / 2) { //Sprawdzanie czy numer rekordu jest prawidłowy
+				cout << "Invalid record number. Please try again: "; //Komunikat o błędzie
+				cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Ignoruj poprzednie wejście1
+			}
+			else {
+				break;
+			}
+			float newtemperature; // Nowa temperatura
+			char newunit; // Nowa jednostka
+			char newdegreeType1; // Nowy typ stopni
+			cout << "What is the new temperature degree type (C/F/K): ";
+			cin >> newdegreeType1;
+			newdegreeType1 = toupper(newdegreeType1); // Zmiana na wielką literę
+			switch (newdegreeType1) { //Switch do wyboru decyzji żeby sprawdzić odpowiednią temperaturę
+			case 'F': {
+				cout << "Enter new temperature in Fahrenheit: ";
+				cin >> newtemperature; // Pobranie nowej temperatury
+				g_table_history[(recordNumber - 1) * 2] = newtemperature; // Zmiana temperatury w historii
+				g_table_units[(recordNumber - 1) * 2] = 'F'; // Zmiana jednostki w historii
+				cout << "Conver to (C/K): "; // Pobranie nowego typu stopni
+				cin >> newdegreeType1; // Pobranie nowego typu stopni
+				newdegreeType1 = toupper(newdegreeType1); // Zmiana na wielką literę
+				if (newdegreeType1 == 'C') {
+					double celsius = Fahr_Celsius(newtemperature);
+					g_table_history[(recordNumber - 1) * 2 + 1] = celsius; // Zmiana temperatury w historii
+					g_table_units[(recordNumber - 1) * 2 + 1] = 'C'; // Zmiana jednostki w historii
+				}
+				else if (newdegreeType1 == 'K') {
+					double kelvin = Fahr_Kelvin(newtemperature);
+					g_table_history[(recordNumber - 1) * 2 + 1] = kelvin; // Zmiana temperatury w historii
+					g_table_units[(recordNumber - 1) * 2 + 1] = 'K'; // Zmiana jednostki w historii
+				}
+				else {
+					cout << "Invalid degree type!" << endl; // Komunikat o błędzie
+				}
+			}
+			case 'C': {
+				cout << "Enter new temperature in Celsius: ";
+				cin >> newtemperature;
+				g_table_history[(recordNumber - 1) * 2] = newtemperature; // Zmiana temperatury w historii
+				g_table_units[(recordNumber - 1) * 2] = 'C'; // Zmiana jednostki w historii
+				cout << "Conver to (F/K): "; // Pobranie nowego typu stopni
+				cin >> newdegreeType1;
+				newdegreeType1 = toupper(newdegreeType1); // Zmiana na wielką literę
+				if (newdegreeType1 == 'F') { 
+					double fahr = Celsium_Fahr(newtemperature);
+					g_table_history[(recordNumber - 1) * 2 + 1] = fahr; // Zmiana temperatury w historii
+					g_table_units[(recordNumber - 1) * 2 + 1] = 'F'; // Zmiana jednostki w historii
+				}
+				else if (newdegreeType1 == 'K') {
+					double kelvin = Celsius_Kelv(newtemperature);
+					g_table_history[(recordNumber - 1) * 2 + 1] = kelvin; // Zmiana temperatury w historii
+					g_table_units[(recordNumber - 1) * 2 + 1] = 'K'; // Zmiana jednostki w historii
+				}
+				else {
+					cout << "Invalid degree type!" << endl;
+				}
+			}
+			case 'K': {
+				cout << "Enter new temperature in Kelvin: ";
+				cin >> newtemperature;
+				g_table_history[(recordNumber - 1) * 2] = newtemperature; // Zmiana temperatury w historii
+				g_table_units[(recordNumber - 1) * 2] = 'K'; // Zmiana jednostki w historii
+				cout << "Conver to (C/F): ";
+				cin >> newdegreeType1;
+				newdegreeType1 = toupper(newdegreeType1); // Zmiana na wielką literę
+				if (newdegreeType1 == 'C') {
+					double celsius = Kelv_cels(newtemperature); // Zmiana temperatury w historii
+					g_table_history[(recordNumber - 1) * 2 + 1] = celsius; // Zmiana temperatury w historii
+					g_table_units[(recordNumber - 1) * 2 + 1] = 'C'; // Zmiana jednostki w historii
+				}
+				else if (newdegreeType1 == 'F') {
+					double fahr = Kelvin_Fahr(newtemperature);
+					g_table_history[(recordNumber - 1) * 2 + 1] = fahr; // Zmiana temperatury w historii
+					g_table_units[(recordNumber - 1) * 2 + 1] = 'F'; // Zmiana jednostki w historii
+				}
+			}
+			default: {
+				cout << "Invalid degree type!" << endl;
+			}
+
+				   break;
+			}
 		}
 	}
+}
+void Full_History_RandomValues() {
+
 }

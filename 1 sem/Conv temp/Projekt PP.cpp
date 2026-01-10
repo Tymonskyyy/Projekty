@@ -23,7 +23,9 @@ int main() {
 		cout << "4. Celsius to Kelvin" << endl;
 		cout << "5. Kelvin to celsius" << endl;
 		cout << "6. Kelvin to Fahrenheit" << endl;
-		cout << "7. History" << endl;
+		cout << "7. History" <<endl;
+		cout << "8. Delete record from History" << endl;
+		cout << "9. Modify record in History" << endl;
 		cout << "-1. Exit" << endl;
 		cout << "------------------------" << endl;
 		cout << "Enter your decision: ";
@@ -63,9 +65,11 @@ int main() {
 			break;
 		}
 		case 8: {
+			deleteRecords();
 			break;
 		}
 		case 9: {
+			ModifyRecord();
 			break;
 		}
 		case 10: {
