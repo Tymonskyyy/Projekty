@@ -258,6 +258,7 @@ void ModifyRecord() {
 
 		int recordNumber = 0; 
 		cout << "Enter the record number to modify (or 0 to cancel): ";
+	
 		while (true) {
 			cin >> recordNumber;
 			if (recordNumber < 0 || recordNumber >= g_Data_Center / 2) { //Sprawdzanie czy numer rekordu jest prawidłowy
@@ -295,6 +296,7 @@ void ModifyRecord() {
 				else {
 					cout << "Invalid degree type!" << endl; // Komunikat o błędzie
 				}
+				break;
 			}
 			case 'C': {
 				cout << "Enter new temperature in Celsius: ";
@@ -317,6 +319,7 @@ void ModifyRecord() {
 				else {
 					cout << "Invalid degree type!" << endl;
 				}
+				break;
 			}
 			case 'K': {
 				cout << "Enter new temperature in Kelvin: ";
@@ -336,16 +339,17 @@ void ModifyRecord() {
 					g_table_history[(recordNumber - 1) * 2 + 1] = fahr; // Zmiana temperatury w historii
 					g_table_units[(recordNumber - 1) * 2 + 1] = 'F'; // Zmiana jednostki w historii
 				}
+				break;
 			}
 			default: {
 				cout << "Invalid degree type!" << endl;
 			}
 
-				   break;
+			break;
 			}
 		}
 	}
 }
-void Full_History_RandomValues() {
+/* void Fill_History_Random_Values() {
 
-}
+}*/
