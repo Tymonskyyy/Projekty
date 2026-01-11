@@ -350,6 +350,6 @@ void ModifyRecord() {
 		}
 	}
 }
-/* void Fill_History_Random_Values() {
+void Fill_History_Random_Values() {
 
-}*/
+}
