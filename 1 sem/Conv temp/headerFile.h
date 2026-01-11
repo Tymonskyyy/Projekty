@@ -255,101 +255,117 @@ void ModifyRecord() {
 	}
 	else {
 		show_All_History(); // Wyświetlanie całej historii
-
-		int recordNumber = 0; 
 		cout << "Enter the record number to modify (or 0 to cancel): ";
-	
-		while (true) {
-			cin >> recordNumber;
-			if (recordNumber < 0 || recordNumber >= g_Data_Center / 2) { //Sprawdzanie czy numer rekordu jest prawidłowy
-				cout << "Invalid record number. Please try again: "; //Komunikat o błędzie
-				cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Ignoruj poprzednie wejście1
+		int recordNumber;
+		cin >> recordNumber;
+		double new_temperature;
+		char new_degree_type, convert_to_type;
+		cout << "What is the new temperature degree type? (F/C/K): ";
+		cin >> new_degree_type;
+		new_degree_type = toupper(new_degree_type);
+		switch (new_degree_type) {
+		case 'F': {
+			cout << "Enter the new temperature in Fahrenheit: ";
+			cin >> new_temperature;
+			if (Check_temp(new_temperature, 'F') == false) {
+				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
+				return; //Zwróć mi błąd
+			}
+			cout << "Convert to which degree type? (C/K): ";
+			cin >> convert_to_type;
+			convert_to_type = toupper(convert_to_type);
+			if (convert_to_type == 'C') {
+				double converted_temp = Fahr_Celsius(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'F';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'C';
+				cout << "Record modified successfully." << endl;
+			}
+			else if (convert_to_type == 'K') {
+				double converted_temp = Fahr_Kelvin(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'F';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'K';
+				cout << "Record modified successfully." << endl;
 			}
 			else {
-				break;
-			}
-			float newtemperature; // Nowa temperatura
-			char newunit; // Nowa jednostka
-			char newdegreeType1; // Nowy typ stopni
-			cout << "What is the new temperature degree type (C/F/K): ";
-			cin >> newdegreeType1;
-			newdegreeType1 = toupper(newdegreeType1); // Zmiana na wielką literę
-			switch (newdegreeType1) { //Switch do wyboru decyzji żeby sprawdzić odpowiednią temperaturę
-			case 'F': {
-				cout << "Enter new temperature in Fahrenheit: ";
-				cin >> newtemperature; // Pobranie nowej temperatury
-				g_table_history[(recordNumber - 1) * 2] = newtemperature; // Zmiana temperatury w historii
-				g_table_units[(recordNumber - 1) * 2] = 'F'; // Zmiana jednostki w historii
-				cout << "Conver to (C/K): "; // Pobranie nowego typu stopni
-				cin >> newdegreeType1; // Pobranie nowego typu stopni
-				newdegreeType1 = toupper(newdegreeType1); // Zmiana na wielką literę
-				if (newdegreeType1 == 'C') {
-					double celsius = Fahr_Celsius(newtemperature);
-					g_table_history[(recordNumber - 1) * 2 + 1] = celsius; // Zmiana temperatury w historii
-					g_table_units[(recordNumber - 1) * 2 + 1] = 'C'; // Zmiana jednostki w historii
-				}
-				else if (newdegreeType1 == 'K') {
-					double kelvin = Fahr_Kelvin(newtemperature);
-					g_table_history[(recordNumber - 1) * 2 + 1] = kelvin; // Zmiana temperatury w historii
-					g_table_units[(recordNumber - 1) * 2 + 1] = 'K'; // Zmiana jednostki w historii
-				}
-				else {
-					cout << "Invalid degree type!" << endl; // Komunikat o błędzie
-				}
-				break;
-			}
-			case 'C': {
-				cout << "Enter new temperature in Celsius: ";
-				cin >> newtemperature;
-				g_table_history[(recordNumber - 1) * 2] = newtemperature; // Zmiana temperatury w historii
-				g_table_units[(recordNumber - 1) * 2] = 'C'; // Zmiana jednostki w historii
-				cout << "Conver to (F/K): "; // Pobranie nowego typu stopni
-				cin >> newdegreeType1;
-				newdegreeType1 = toupper(newdegreeType1); // Zmiana na wielką literę
-				if (newdegreeType1 == 'F') { 
-					double fahr = Celsium_Fahr(newtemperature);
-					g_table_history[(recordNumber - 1) * 2 + 1] = fahr; // Zmiana temperatury w historii
-					g_table_units[(recordNumber - 1) * 2 + 1] = 'F'; // Zmiana jednostki w historii
-				}
-				else if (newdegreeType1 == 'K') {
-					double kelvin = Celsius_Kelv(newtemperature);
-					g_table_history[(recordNumber - 1) * 2 + 1] = kelvin; // Zmiana temperatury w historii
-					g_table_units[(recordNumber - 1) * 2 + 1] = 'K'; // Zmiana jednostki w historii
-				}
-				else {
-					cout << "Invalid degree type!" << endl;
-				}
-				break;
-			}
-			case 'K': {
-				cout << "Enter new temperature in Kelvin: ";
-				cin >> newtemperature;
-				g_table_history[(recordNumber - 1) * 2] = newtemperature; // Zmiana temperatury w historii
-				g_table_units[(recordNumber - 1) * 2] = 'K'; // Zmiana jednostki w historii
-				cout << "Conver to (C/F): ";
-				cin >> newdegreeType1;
-				newdegreeType1 = toupper(newdegreeType1); // Zmiana na wielką literę
-				if (newdegreeType1 == 'C') {
-					double celsius = Kelv_cels(newtemperature); // Zmiana temperatury w historii
-					g_table_history[(recordNumber - 1) * 2 + 1] = celsius; // Zmiana temperatury w historii
-					g_table_units[(recordNumber - 1) * 2 + 1] = 'C'; // Zmiana jednostki w historii
-				}
-				else if (newdegreeType1 == 'F') {
-					double fahr = Kelvin_Fahr(newtemperature);
-					g_table_history[(recordNumber - 1) * 2 + 1] = fahr; // Zmiana temperatury w historii
-					g_table_units[(recordNumber - 1) * 2 + 1] = 'F'; // Zmiana jednostki w historii
-				}
-				break;
-			}
-			default: {
 				cout << "Invalid degree type!" << endl;
 			}
-
 			break;
+		}
+		case 'C': {
+			cout << "Enter the new temperature in Celsius: ";
+			cin >> new_temperature;
+			if (Check_temp(new_temperature, 'C') == false) {
+				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
+				return; //Zwróć mi błąd
 			}
+			cout << "Convert to which degree type? (F/K): ";
+			cin >> convert_to_type;
+			convert_to_type = toupper(convert_to_type);
+			if (convert_to_type == 'F') {
+				double converted_temp = Celsium_Fahr(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'C';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'F';
+				cout << "Record modified successfully." << endl;
+			}
+			else if (convert_to_type == 'K') {
+				double converted_temp = Celsius_Kelv(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'C';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'K';
+				cout << "Record modified successfully." << endl;
+			}
+			else {
+				cout << "Invalid degree type!" << endl;
+			}
+			break;
+
+		}
+		case 'K': {
+			cout << "Enter the new temperature in Kelvin: ";
+			cin >> new_temperature;
+			if (Check_temp(new_temperature, 'K') == false) {
+				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
+				return; //Zwróć mi błąd
+			}
+			cout << "Convert to which degree type? (C/F): ";
+			cin >> convert_to_type;
+			convert_to_type = toupper(convert_to_type);
+			if (convert_to_type == 'C') {
+				double converted_temp = Kelv_cels(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'K';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'C';
+				cout << "Record modified successfully." << endl;
+			}
+			else if (convert_to_type == 'F') {
+				double converted_temp = Kelvin_Fahr(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'K';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'F';
+				cout << "Record modified successfully." << endl;
+			}
+			else {
+				cout << "Invalid degree type!" << endl;
+			}
+			break;
+
+		}
+		default: {
+			cout << "Invalid degree type!" << endl;
+			break;
+		}
 		}
 	}
 }
-void Fill_History_Random_Values() {
+/*void Fill_History_Random_Values() {
 
-}
+}*/
