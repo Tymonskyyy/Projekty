@@ -34,4 +34,7 @@ void deleteRecords(); //Funkcja do usuwania rekordu z historii
 void ModifyRecord(); //Funkcja do modyfikowania rekordu w historii
 void Fill_History_Random_Values(); //Funkcja do wypełniania historii losowymi wartościami
 
+//Zabezpiecznie do pobierania bezpiecznej liczby zmiennoprzecinkowej
+double get_safedouble(); 
+
 #endif

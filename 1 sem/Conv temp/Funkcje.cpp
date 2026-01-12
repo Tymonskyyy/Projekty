@@ -42,6 +42,22 @@ bool Check_temp(double temp_value, char unit_type) { //Funkcja do sprawdzania cz
 	}
 	return true; //Zwracanie prawdy jeśli temperatura jest powyżej zera absolutnego
 }
+double get_safedouble() {
+	double value; // Deklaracja zmiennej do przechowywania wartości
+	while (true) {
+		cin >> value; // Pobranie wartości od użytkownika
+		if(cin.fail()) { //Sprawdzanie czy nie wpisano złej warotści typu liczba = cyfra
+			cin.clear(); //czyszczenie cina
+			cin.ignore(numeric_limits<streamsize> :: max(), '\n';);
+			cout << "Invalid input. Please enter a valid number: "; //Komunikat o błędzie
+		}
+		else {
+			cin.ignore(numeric_limits<streamsize> ::max(), '\n'); //Ignorowanie reszty linii, inaczej czyści dalszą cześć lini typu 12rahuj to masz tylko 12
+			return value; //zwraca value
+		}
+	}
+} //Deklaracja funkcji do pobierania bezpiecznej liczby zmiennoprzecinkowej
+
 void Save_to_history(double temperature1, char degreeType1, double temperature2, char degreeType2) {
 	if (g_Data_Center < 100) {
 		g_table_history[g_Data_Center] = temperature1;
@@ -61,7 +77,7 @@ double Fahr_Celsius(double fahr) {
 void Fahr_Celsius_option() {
 	double fahr;
 	cout << "Enter temperature in Fahrenheit: ";
-	cin >> fahr;
+	fahr = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 	if (Check_temp(fahr, 'F') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
 		return; //Zwróć mi błąd
@@ -77,7 +93,7 @@ double Fahr_Kelvin(double fahr) {
 void Fahr_Kelvin_option() {
 	double fahr;
 	cout << "Enter temperature in Fahrenheit: ";
-	cin >> fahr;
+	fahr = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 	if (Check_temp(fahr, 'F') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
 		return; //Zwróć mi błąd
@@ -93,7 +109,7 @@ double Celsium_Fahr(double celsius) {
 void Celsium_Fahr_option() {
 	double celsius;
 	cout << "Enter temperature in Celsius: ";
-	cin >> celsius;
+	celcius = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 	if (Check_temp(celsius, 'C') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
 		return; //Zwróć mi błąd
@@ -109,7 +125,7 @@ double Celsius_Kelv(double celsius) {
 void Celsius_Kelv_option() {
 	double celsius;
 	cout << "Enter temperature in Celsius: ";
-	cin >> celsius;
+	celsius = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 	if (Check_temp(celsius, 'C') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
 		return; //Zwróć mi błąd
@@ -125,7 +141,7 @@ double Kelv_cels(double kelvin) {
 void Kelv_cels_option() {
 	double kelvin;
 	cout << "Enter temperature in Kelvin: ";
-	cin >> kelvin;
+	kelvin = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 	if (Check_temp(kelvin, 'K') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
 		return; //Zwróć mi błąd
@@ -141,7 +157,7 @@ double Kelvin_Fahr(double kelvin) {
 void Kelvin_Fahr_option() {
 	double kelvin;
 	cout << "Enter temperature in Kelvin: ";
-	cin >> kelvin;
+	kelvin = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 	if (Check_temp(kelvin, 'K') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
 		return; //Zwróć mi błąd
@@ -232,7 +248,7 @@ void deleteRecords() {
 		int recordNumber;
 		cout << "Enter the record number to delete (or 0 to cancel): ";
 		while (true) {
-			cin >> recordNumber;
+			recordNUmber = get_safedouble(); //Pobieranie bezpiecznej liczby
 			if (recordNumber < 0 || recordNumber >= g_Data_Center / 2) { //Sprawdzanie czy numer rekordu jest prawidłowy
 				cout << "Invalid record number. Please try again: "; //Komunikat o błędzie
 				cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Ignoruj poprzednie wejście1
@@ -267,7 +283,7 @@ void ModifyRecord() {
 		switch (new_degree_type) {
 		case 'F': {
 			cout << "Enter the new temperature in Fahrenheit: ";
-			cin >> new_temperature;
+			new_temperature = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 			if (Check_temp(new_temperature, 'F') == false) {
 				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
 				return; //Zwróć mi błąd
@@ -298,7 +314,7 @@ void ModifyRecord() {
 		}
 		case 'C': {
 			cout << "Enter the new temperature in Celsius: ";
-			cin >> new_temperature;
+			new_temperature = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 			if (Check_temp(new_temperature, 'C') == false) {
 				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
 				return; //Zwróć mi błąd
@@ -330,7 +346,7 @@ void ModifyRecord() {
 		}
 		case 'K': {
 			cout << "Enter the new temperature in Kelvin: ";
-			cin >> new_temperature;
+			new_temperature = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 			if (Check_temp(new_temperature, 'K') == false) {
 				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
 				return; //Zwróć mi błąd

@@ -30,7 +30,7 @@ int main() {
 		cout << "-1. Exit" << endl;
 		cout << "------------------------" << endl;
 		cout << "Enter your decision: ";
-		cin >> decision; // pobranie decyzji od u¿ytkownika
+		decision = (int)get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 		system("cls"); // czyści ekran konsoli
 		//decyzje które kto chce convertować.
 		if (decision == -1) {
