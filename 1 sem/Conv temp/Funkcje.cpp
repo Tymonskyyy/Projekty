@@ -1,287 +1,441 @@
-﻿
-using std::cout;
-using std::cin;
-using std::endl;
-double g_table_history[100][2]; // tablica do przechowywania historii konwersji
+﻿#include <iostream>
+#include <limits>
+#include <random>
+#include <stdlib.h>
+#include <time.h>   // Potrzebne do time(nullptr)
+#include "headerFile.h" // Musimy dołączyć nasz nagłówek!
+using namespace std;
+// Definicje zmiennych globalnych rezerwacja pamięci dla nich
+double g_table_history[100]; // tablica do przechowywania historii konwersji
+char g_table_units[100]; // tablica do przechowywania jednostek konwersji
 int g_Data_Center = 0; // zmienna do przechowywania liczby wpisów w historii
-void Memory_History(double result, int unit_code) { //Archiwista zapisujący historię świata
 
-	if (g_Data_Center < 100) { //Jeżeli nasza historia jest mniejsza niż 100 wpisów
-		g_table_history[g_Data_Center][0] = result; // zapisywanie wyniku działania użytkowniak
-		g_table_history[g_Data_Center][1] = unit_code; // zapisywanie kodu jednostki
-		g_Data_Center++;	// Przechodzimy do następnego wpisu w historii
-	}
-	else { //Jeżeli nie
-		//Zapełnienie tablicy (przeciwdziałanie)
-		cout << "History is full!" << endl;
-		cout << "Cannot save more entries." << endl;
-
-	}
-}
-static void Show_History() { // Telewizor do wyświetlania 
-	cout << "Conversion History:" << endl; // nagłówek historii			
-	int filter_choice = 4; //Wartość domyślna
-	cout << "Filter by unit type?" << endl;
-	cout << "1. Celsius" << endl;
-	cout << "2. Fahrenheit" << endl;
-	cout << "3. Kelvin" << endl;
-	cout << "4. Everything" << endl;
-	cout << "Enter your choice (1-4): ";
-	cin >> filter_choice;
-
-	if (g_Data_Center == 0) { // sprawdzanie czy historia jest pusta
-		cout << "No entries in history." << endl;
-		return;
-	}
-	bool found_enteries = false; //zmienna do sprawdzania czy znaleziono wpisy
-
-
-	for (int i = 0; i < g_Data_Center; i++) { // Pętlka jęzeli coś jest w hitsorii to wypisz na ekranie
-
-		double result = g_table_history[i][0]; // pobieranie wyniku z historii
-		int	unit_code = g_table_history[i][1]; // pobieranie kodu jednostki z historii
-		int record_number = i + 1; // numer wpisu w historii
-		if (unit_code == filter_choice || filter_choice == 4) {
-			found_enteries = true; //znalezienie prawidłowego wpisu
-			cout << "Entry " << i + 1 << ": " << result; // wyświetlanie numeru wpisu
-
-
-
-			switch (unit_code) { //DO wyboru literki do tempperatyu
-			case 1:
-				cout << record_number << ". ";
-				cout << record_number << result << "C" << endl; //endl to nowa linia zaś cała linijka pokazuje wynik
-				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
-				break;
-			case 2:
-				cout << result << "F" << endl;
-				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
-				break;
-			case 3:
-				cout << result << "K" << endl;
-				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
-				break;
-			case 4:
-				cout << "C" << endl;
-				cout << i + 1 << ". " << g_table_history[i][0] << endl; // wyświetlanie wpisów historii
-				break;
-			default:
-				cout << "Unknown unit code" << endl;
-				break;
-
-			}
-
-		}
-	}
-	if (!found_enteries) {
-		cout << "No entries found for the specified filter." << endl;
-	}
-
-}
-
-static void Clear_History() { //Funkcja do czyszczenia historii
-	g_Data_Center = 0; //Ustawienie licznika wpisów na 0
-	cout << "History cleared." << endl; //Komunikat o wyczyszczeniu historii
-}
-static bool Check_temp(double temp_value, int unit_type) { //Funkcja do sprawdzania czy temperatura nie jest ponizej zera absolutnego
-	int Fahr_Celsius(int fahr); //Deklaracja funkcji
-	int Fahr_Kelvin(int fahr); //Deklaracja funkcji
-	int Celsium_Fahr(int celsius);
-	int Celsius_Kelv(int celsius);
-	int Kelv_cels(int kelvin);
-	int Kelvin_Fahr(int kelvin);
+bool Check_temp(double temp_value, char unit_type) { //Funkcja do sprawdzania czy temperatura nie jest ponizej zera absolutnego
 	//Sprawdzanie czy temperatura nie jest ponizej zera absolutnego
 	switch (unit_type) { //Switch do wyboru decyzji żeby sprawdzić odpowiednią temperaturę
 		//Do danej decyzji sprawdzamy czy nie zrobił użytkownik błedu
-	case 1:
+	case 'F': {
 		if (temp_value < -459.67) {
 			cout << "Error: Temperature below absolute zero!" << endl;
 			return false;
 		}
 		break;
-
-	case 2:
-		if (temp_value < -459.67) {
-			cout << "Error: Temperature below absolute zero!" << endl;
-			return false;
-		}
-
-
-		break;
-
-	case 3:
+	}
+	case 'C': {
 		if (temp_value < -273.15) {
 			cout << "Error: Temperature below absolute zero!" << endl;
 			return false;
 		}
-
 		break;
-	case 4:
-		if (temp_value < -273.15) {
-			cout << "Error: Temperature below absolute zero!" << endl;
-		}
-
-		break;
-	case 5:
+	}
+	case 'K': {
 		if (temp_value < 0) {
 			cout << "Error: Temperature below absolute zero!" << endl;
 			return false;
 		}
-		break; //Zawsze musi być break w switch
-	case 6:
-		if (temp_value < 0) {
-			cout << "Error: Temperature below absolute zero!" << endl;
-			return false;
-		}
-		break;	//Zawsze musi być break w switch
+		break;
+	}
+	default: {
+		cout << "Unknown unit type!" << endl;
+		return false;
+	}
 	}
 	return true; //Zwracanie prawdy jeśli temperatura jest powyżej zera absolutnego
 }
-static double Fahr_Celsius() {
-	double fahr, celsius;
-	int start, limit, step;
-
-	cout << "Fahrenheit\tCelsius" << endl;
-	cout << "------------------------" << endl;
-	cout << "Provide grades";
-	cin >> fahr;
-
-	start = 0;    // poczatkowa temperatura w skali Fahrenheita
-	limit = 200; // przypis 200 do zmiennej limit
-	step = 20;   // krok co 20 stopni
-	if (Check_temp(fahr, 1) == false) {
-		return -1000; //Umyślny uniwerasalny bład ktory ma mi pokazać BŁĄD
+void Save_to_history(double temperature1, char degreeType1, double temperature2, char degreeType2) {
+	if (g_Data_Center < 100) {
+		g_table_history[g_Data_Center] = temperature1;
+		g_table_history[g_Data_Center + 1] = temperature2;
+		g_table_units[g_Data_Center] = degreeType1;
+		g_table_units[g_Data_Center + 1] = degreeType2;
+		g_Data_Center += 2;
 	}
-	while (fahr <= limit) {
-
-		double celsius = (fahr - 32) * 5.0 / 9.0;
-		cout << fahr << "F" << "\t" << celsius << "C" << endl;
-		return celsius;
+	else {
+		cout << "Conversion history is full!" << endl;
 	}
-	return 0;
-} //Działa//Działa
-static double Fahr_Kelvin() {
-	double fahr, kelvin;
-	int start, limit, step;
-
-	cout << "Fahrenheit\tKelvin" << endl;
-	cout << "------------------------" << endl;
-	cout << "Provide grades";
-	cin >> fahr;
-	start = 0;    // poczatkowa temperatura w skali Fahrenheita
-	limit = 200; // przypis 200 do zmiennej limit
-	step = 20;   // krok co 20 stopni
-	if (Check_temp(fahr, 2) == false) {
-		return -1000; //Zwróć mi błąd
-	}
-	while (fahr <= limit) {
-		double kelvin = (fahr + 459.67) * 5.0 / 9.0;
-		cout << fahr << "F" << "\t" << kelvin << "K" << endl;
-		return kelvin;
-	}
-	return 0;
-	/*
-	if kelvin < 0{
-		cout << "Error: Temperature below absolute zero!" << endl;
-
-	}*/
-}//Działa
-static double Celsium_Fahr() {
-	double fahr, celsius; // deklaracja zmiennych
-	int start, limit, step; // deklaracja zmiennych
-	cout << "Celsium\tFahrenheit" << endl;
-	cout << "------------------------" << endl;
-	cout << "Provide grades";
-	cin >> celsius;
-	start = 0;    // poczatkowa temperatura w skali Fahrenheita
-	limit = 200; // przypis 200 do zmiennej limit
-	step = 20;   // krok co 20 stopni
-	if (Check_temp(celsius, 3) == false) {
-		return -1000; //Zwróć mi błąd
-
-	}
-	while (celsius <= limit) { // pêtla while
-		double fahr = celsius * 9.0 / 5.0 + 32.0; // Konwersja Celsium na Fahrenheita
-		cout << celsius << "C" << "\t" << fahr << "F" << endl; // Wyświetlanie wartości
-		return fahr; //Zwracanie wartości funkcji
-
-	}
-	return 0;
-	/*
-	if fahr < -459.67 {
-		cout << "Error: Temperature below absolute zero!" << endl;*/
-		//}
-}//Działa
-static double Celsius_Kelv() {
-	int celsius;
-	int kelvin;
-	int start;
-	int limit;
-	int step;
-	start = 0;    // poczatkowa temperatura w skali Fahrenheita
-	limit = 200; // przypis 200 do zmiennej limit
-	step = 20;   // krok co 20 stopni
-	cout << "Celsius\tKelvin" << endl;
-	cout << "------------------------" << endl;
-	cout << "Provide grades";
-	cin >> celsius;
-	if (Check_temp(celsius, 4) == false) {
-		return -1000; //Zwróć mi błąd
-	}
-
-	while (celsius <= limit) {
-		double kelvin = celsius + 273.15;
-		cout << celsius << "C" << "\t" << kelvin << "K" << endl;
-		return kelvin;
-	}
-	return 0;
-	/*
-	if kelvin < 0 {
-		cout << "Error: Temperature below absolute zero!" << endl;
-		*/
-		//}
 }
-static double Kelv_cels() {
-	int kelvin, celsius;
-	int start, limit, step;
-	int ending;
-	cout << "Kelvin\tCelsius" << endl;
-	cout << "------------------------" << endl;
-	cout << "Provide grades";
-	cin >> kelvin;
-	start = 0;    // poczatkowa temperatura w skali Fahrenheita
-	limit = 200; // przypis 200 do zmiennej limit
-	step = 20;   // krok co 20 stopni
-	if (Check_temp(kelvin, 5) == false) { //Sprawdzenie czy temperatura nie jest poniżej zera absolutnego
+double Fahr_Celsius(double fahr) {
 
-		return -1000; //Zwróć mi błąd
-	}
-	while (kelvin <= limit) {
-		double celsius = kelvin - 273.15;
-		cout << kelvin << "K" << "\t" << celsius << "C" << endl;
-		return celsius;
-	}
-
-	return 0;
+	return (fahr - 32.0) * 5.0 / 9.0;
 }
-static double Kelvin_Fahr() {
-	double kelvin, fahr;
-	int start, limit, step;
-	cout << "Kelvin\tFahrenheit" << endl;
-	cout << "------------------------" << endl;
-	cout << "Provide grades";
-	cin >> kelvin;
-	start = 0;    // poczatkowa temperatura w skali Fahrenheita
-	limit = 200; // przypis 200 do zmiennej limit
-	step = 20;   // krok co 20 stopni
-	if (Check_temp(kelvin, 6) == false) {
-		return -1000; //Zwróć mi błąd
+void Fahr_Celsius_option() {
+	double fahr;
+	cout << "Enter temperature in Fahrenheit: ";
+	cin >> fahr;
+	if (Check_temp(fahr, 'F') == false) {
+		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
+		return; //Zwróć mi błąd
 	}
-	while (kelvin <= limit) {
-		double fahr = kelvin * 9.0 / 5.0 - 459.67;
-		cout << kelvin << "K" << "\t" << fahr << "F" << endl;
-		return fahr;
+	double celsius = Fahr_Celsius(fahr);
+	cout << fahr << "F is " << celsius << "C" << endl;
+	//Zapis do historii
+	Save_to_history(fahr, 'F', celsius, 'C');
+}
+double Fahr_Kelvin(double fahr) {
+	return (fahr - 32.0) * 5.0 / 9.0 + 273.15;
+}
+void Fahr_Kelvin_option() {
+	double fahr;
+	cout << "Enter temperature in Fahrenheit: ";
+	cin >> fahr;
+	if (Check_temp(fahr, 'F') == false) {
+		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
+		return; //Zwróć mi błąd
+	}
+	double kelvin = Fahr_Kelvin(fahr);
+	cout << fahr << "F is " << kelvin << "K" << endl;
+	//Zapis do historii
+	Save_to_history(fahr, 'F', kelvin, 'K');
+}
+double Celsium_Fahr(double celsius) {
+	return (celsius * 9.0 / 5.0) + 32.0;
+}
+void Celsium_Fahr_option() {
+	double celsius;
+	cout << "Enter temperature in Celsius: ";
+	cin >> celsius;
+	if (Check_temp(celsius, 'C') == false) {
+		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
+		return; //Zwróć mi błąd
+	}
+	double fahr = Celsium_Fahr(celsius);
+	cout << celsius << "C is " << fahr << "F" << endl;
+	//Zapis do historii
+	Save_to_history(celsius, 'C', fahr, 'F');
+}
+double Celsius_Kelv(double celsius) {
+	return celsius + 273.15;
+}
+void Celsius_Kelv_option() {
+	double celsius;
+	cout << "Enter temperature in Celsius: ";
+	cin >> celsius;
+	if (Check_temp(celsius, 'C') == false) {
+		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
+		return; //Zwróć mi błąd
+	}
+	double kelvin = Celsius_Kelv(celsius);
+	cout << celsius << "C is " << kelvin << "K" << endl;
+	//Zapis do historii
+	Save_to_history(celsius, 'C', kelvin, 'K');
+}
+double Kelv_cels(double kelvin) {
+	return kelvin - 273.15;
+}
+void Kelv_cels_option() {
+	double kelvin;
+	cout << "Enter temperature in Kelvin: ";
+	cin >> kelvin;
+	if (Check_temp(kelvin, 'K') == false) {
+		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
+		return; //Zwróć mi błąd
+	}
+	double celsius = Kelv_cels(kelvin);
+	cout << kelvin << "K is " << celsius << "C" << endl;
+	//Zapis do historii
+	Save_to_history(kelvin, 'K', celsius, 'C');
+}
+double Kelvin_Fahr(double kelvin) {
+	return (kelvin - 273.15) * 9.0 / 5.0 + 32.0;
+}
+void Kelvin_Fahr_option() {
+	double kelvin;
+	cout << "Enter temperature in Kelvin: ";
+	cin >> kelvin;
+	if (Check_temp(kelvin, 'K') == false) {
+		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
+		return; //Zwróć mi błąd
+	}
+	double fahr = Kelvin_Fahr(kelvin);
+	cout << kelvin << "K is " << fahr << "F" << endl;
+	//Zapis do historii
+	Save_to_history(kelvin, 'K', fahr, 'F');
+}
+void show_menu_history() {
+	cout << "Conversion History:" << endl;
+	cout << "------------------------" << endl;
+	cout << "Celsius (C)" << endl;
+	cout << "Fahrenheit (F)" << endl;
+	cout << "Kelvin (K)" << endl;
+	cout << "All (A)" << endl;
+}
+void show_History() {
+	if (g_Data_Center == 0) {
+		cout << "No entries in history." << endl;
+		return;
+	}
+	else {
+		int index = 1, counter = 0; //Inicjalizacja zmiennych do numeracji i liczenia wpisów11
+
+		show_menu_history();
+		int deccision;
+		cout << "Enter your decision: ";
+		cin >> deccision;
+		system("cls"); // czyści ekran konsoli
+		switch (deccision) {
+		case 1: {
+			for (int i = 0; i < g_Data_Center; i += 2) { //Iteracja przez historię
+				if (g_table_units[i] == 'C') { //Sprawdzenie czy jednostka to Celsium
+					cout << index++ << ". " << g_table_history[i] << "C -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl; //Wyświetlanie wpisu historii
+					counter++;
+				}
+			}
+			break;
+		}
+		case 2: {
+			for (int i = 0; i < g_Data_Center; i += 2) {
+				if (g_table_units[i] == 'F') {
+					cout << index++ << ". " << g_table_history[i] << "F -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl;
+					counter++;
+				}
+			}
+			break;
+		}
+		case 3: {
+			for (int i = 0; i < g_Data_Center; i += 2) {
+				if (g_table_units[i] == 'K') {
+					cout << index++ << ". " << g_table_history[i] << "K -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl;
+					counter++;
+				}
+			}
+			break;
+		}
+		case 4: {
+			for (int i = 0; i < g_Data_Center; i += 2) {
+				cout << index++ << ". " << g_table_history[i] << g_table_units[i] << " -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl;
+				counter++;
+			}
+			break;
+		}
+		}
+	}
+}
+void show_All_History() {
+	if (g_Data_Center == 0) {
+		cout << "No entries in history." << endl;
+		return;
+	}
+	else {
+		for (int i = 0; i < g_Data_Center; i += 2) {
+			cout << (i / 2) + 1 << ". " << g_table_history[i] << g_table_units[i] << " -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl;
+		}
+	}
+}
+void deleteRecords() {
+	if (g_Data_Center == 0) {
+		cout << "No entries in history to delete." << endl;
+		return;
+	}
+	else {
+		show_All_History();
+
+		int recordNumber;
+		cout << "Enter the record number to delete (or 0 to cancel): ";
+		while (true) {
+			cin >> recordNumber;
+			if (recordNumber < 0 || recordNumber >= g_Data_Center / 2) { //Sprawdzanie czy numer rekordu jest prawidłowy
+				cout << "Invalid record number. Please try again: "; //Komunikat o błędzie
+				cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Ignoruj poprzednie wejście1
+			}
+			else {
+				break;
+			}
+		}
+		//usuwanie rekordu
+		for (int i = (recordNumber * 2) - 2; i < g_Data_Center - 2; i++) { // Przesuwanie wpisów historii
+			g_table_history[i] = g_table_history[i + 2]; // Przesuwanie wpisów historii
+			g_table_units[i] = g_table_units[i + 2]; // Przesuwanie jednostek
+		}
+		g_Data_Center -= 2; // Zmniejszenie liczby wpisów w historii
+		cout << "Record " << recordNumber << " deleted successfully." << endl;
+	}
+}
+void ModifyRecord() {
+	if (g_Data_Center == 0) {//Sprawdzanie czy historia jest pusta
+		cout << "No conversion records to modify." << endl; //Komunikat o braku wpisów
+	}
+	else {
+		show_All_History(); // Wyświetlanie całej historii
+		cout << "Enter the record number to modify (or 0 to cancel): ";
+		int recordNumber;
+		cin >> recordNumber;
+		double new_temperature;
+		char new_degree_type, convert_to_type;
+		cout << "What is the new temperature degree type? (F/C/K): ";
+		cin >> new_degree_type;
+		new_degree_type = toupper(new_degree_type);
+		switch (new_degree_type) {
+		case 'F': {
+			cout << "Enter the new temperature in Fahrenheit: ";
+			cin >> new_temperature;
+			if (Check_temp(new_temperature, 'F') == false) {
+				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
+				return; //Zwróć mi błąd
+			}
+			cout << "Convert to which degree type? (C/K): ";
+			cin >> convert_to_type;
+			convert_to_type = toupper(convert_to_type);
+			if (convert_to_type == 'C') {
+				double converted_temp = Fahr_Celsius(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'F';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'C';
+				cout << "Record modified successfully." << endl;
+			}
+			else if (convert_to_type == 'K') {
+				double converted_temp = Fahr_Kelvin(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'F';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'K';
+				cout << "Record modified successfully." << endl;
+			}
+			else {
+				cout << "Invalid degree type!" << endl;
+			}
+			break;
+		}
+		case 'C': {
+			cout << "Enter the new temperature in Celsius: ";
+			cin >> new_temperature;
+			if (Check_temp(new_temperature, 'C') == false) {
+				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
+				return; //Zwróć mi błąd
+			}
+			cout << "Convert to which degree type? (F/K): ";
+			cin >> convert_to_type;
+			convert_to_type = toupper(convert_to_type);
+			if (convert_to_type == 'F') {
+				double converted_temp = Celsium_Fahr(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'C';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'F';
+				cout << "Record modified successfully." << endl;
+			}
+			else if (convert_to_type == 'K') {
+				double converted_temp = Celsius_Kelv(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'C';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'K';
+				cout << "Record modified successfully." << endl;
+			}
+			else {
+				cout << "Invalid degree type!" << endl;
+			}
+			break;
+
+		}
+		case 'K': {
+			cout << "Enter the new temperature in Kelvin: ";
+			cin >> new_temperature;
+			if (Check_temp(new_temperature, 'K') == false) {
+				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
+				return; //Zwróć mi błąd
+			}
+			cout << "Convert to which degree type? (C/F): ";
+			cin >> convert_to_type;
+			convert_to_type = toupper(convert_to_type);
+			if (convert_to_type == 'C') {
+				double converted_temp = Kelv_cels(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'K';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'C';
+				cout << "Record modified successfully." << endl;
+			}
+			else if (convert_to_type == 'F') {
+				double converted_temp = Kelvin_Fahr(new_temperature);
+				g_table_history[(recordNumber - 1) * 2] = new_temperature;
+				g_table_units[(recordNumber - 1) * 2] = 'K';
+				g_table_history[(recordNumber - 1) * 2 + 1] = converted_temp;
+				g_table_units[(recordNumber - 1) * 2 + 1] = 'F';
+				cout << "Record modified successfully." << endl;
+			}
+			else {
+				cout << "Invalid degree type!" << endl;
+			}
+			break;
+
+		}
+		default: {
+			cout << "Invalid degree type!" << endl;
+			break;
+		}
+		}
+	}
+}
+void Fill_History_Random_Values() {
+	if (g_Data_Center >= 100) {
+		cout << "Conversion history is full!" << endl;
+		return;
+	}
+	int recordsToAdd;
+	cout << "Enter the number of random records to add (max " << (100 - g_Data_Center) / 2 << "): ";
+	cin >> recordsToAdd;
+
+	if (recordsToAdd <1 || recordsToAdd >(100 - g_Data_Center) / 2) { // Sprawdzanie czy liczba rekordów jest prawidłowa
+		cout << "Invalid number of records." << endl;
+		return;
 	}
 
-	return 0;
+	if (g_Data_Center + recordsToAdd > 100) { // Sprawdzanie czy dodanie rekordów przekroczy limit
+		int possibleToAdd = (100 - g_Data_Center) / 2; // Obliczanie ile rekordów można dodać
+		cout << "Not enough space in history. Can only add " << possibleToAdd << " records." << endl;
+		cout << "Generating " << possibleToAdd << "instead (y/n)?";
+		char choice;
+		cin >> choice;
+		if (choice == 'y' || choice == 'Y') {
+			recordsToAdd = possibleToAdd;
+		}
+		else {
+			return;
+		}
+	}
+	srand(time(nullptr)); // Inicjalizacja generatora liczb losowych
+	for (int i = 0; i < recordsToAdd; i++) {
+		int randomtemperature;
+		double converted_temp;
+		double temperature;
+		char degreeType;
+		char convertToType;
+
+		int randomchoice = rand() % 3; // Losowy wybór jednostki początkowej
+		if (randomchoice == 0) { //Celsium
+			degreeType = 'C';
+		}
+		else if (randomchoice == 1) { //Fahrenheita
+			degreeType = 'F';
+		}
+		else { //Kelvina
+			degreeType = 'K';
+		}
+		switch (degreeType) {
+		case 'F': {
+			randomtemperature = rand() % 1000 - 459; // Losowa temperatura w zakresie od -459 do 540
+			temperature = static_cast <float> (randomtemperature); // Konwersja na double
+			converted_temp = (rand() % 2 == 0) ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybór jednostki docelowej
+			convertToType = (degreeType == 'C') ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybór jednostki docelowej
+			break;
+		}
+		case 'C': {
+			randomtemperature = rand() % 500 - 273; // Losowa temperatura w zakresie od -273 do 226
+			temperature = static_cast <float> (randomtemperature); // Konwersja na double
+			converted_temp = (rand() % 2 == 0) ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybór jednostki docelowej
+			convertToType = (degreeType == 'F') ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybór jednostki docelowej
+			break;
+		}
+		case 'K': {
+			randomtemperature = rand() % 500; // Losowa temperatura w zakresie od 0 do 499
+			temperature = static_cast <float> (randomtemperature); // Konwersja na double
+			converted_temp = (rand() % 2 == 0) ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybór jednostki docelowej
+			convertToType = (degreeType == 'C') ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybór jednostki docelowej
+			break;
+		}
+		}
+		Save_to_history(temperature, degreeType, convertToType, converted_temp);
+	}
+	cout << "Random records added successfully." << endl;
 }
