@@ -1,19 +1,20 @@
-ï»¿#include <iostream>
+#include <iostream>
 #include <limits>
 #include <random>
 #include <stdlib.h>
 #include <time.h>   // Potrzebne do time(nullptr)
-#include "headerFile.h" // Musimy doÅ‚Ä…czyÄ‡ nasz nagÅ‚Ã³wek!
+#include <limits> // <-- To jest kluczowe dla numeric_limits
+#include "headerFile.h" // Musimy do³¹czyæ nasz nag³ówek!
 using namespace std;
-// Definicje zmiennych globalnych rezerwacja pamiÄ™ci dla nich
+// Definicje zmiennych globalnych rezerwacja pamiêci dla nich
 double g_table_history[100]; // tablica do przechowywania historii konwersji
 char g_table_units[100]; // tablica do przechowywania jednostek konwersji
-int g_Data_Center = 0; // zmienna do przechowywania liczby wpisÃ³w w historii
+int g_Data_Center = 0; // zmienna do przechowywania liczby wpisów w historii
 
 bool Check_temp(double temp_value, char unit_type) { //Funkcja do sprawdzania czy temperatura nie jest ponizej zera absolutnego
 	//Sprawdzanie czy temperatura nie jest ponizej zera absolutnego
-	switch (unit_type) { //Switch do wyboru decyzji Å¼eby sprawdziÄ‡ odpowiedniÄ… temperaturÄ™
-		//Do danej decyzji sprawdzamy czy nie zrobiÅ‚ uÅ¼ytkownik bÅ‚edu
+	switch (unit_type) { //Switch do wyboru decyzji ¿eby sprawdziæ odpowiedni¹ temperaturê
+		//Do danej decyzji sprawdzamy czy nie zrobi³ u¿ytkownik b³edu
 	case 'F': {
 		if (temp_value < -459.67) {
 			cout << "Error: Temperature below absolute zero!" << endl;
@@ -40,19 +41,19 @@ bool Check_temp(double temp_value, char unit_type) { //Funkcja do sprawdzania cz
 		return false;
 	}
 	}
-	return true; //Zwracanie prawdy jeÅ›li temperatura jest powyÅ¼ej zera absolutnego
+	return true; //Zwracanie prawdy jeœli temperatura jest powy¿ej zera absolutnego
 }
 double get_safedouble() {
-	double value; // Deklaracja zmiennej do przechowywania wartoÅ›ci
+	double value; // Deklaracja zmiennej do przechowywania wartoœci
 	while (true) {
-		cin >> value; // Pobranie wartoÅ›ci od uÅ¼ytkownika
-		if (cin.fail()) { //Sprawdzanie czy nie wpisano zÅ‚ej warotÅ›ci typu liczba = cyfra
+		cin >> value; // Pobranie wartoœci od u¿ytkownika
+		if (cin.fail()) { //Sprawdzanie czy nie wpisano z³ej warotœci typu liczba = cyfra
 			cin.clear(); //czyszczenie cina
 			cin.ignore(numeric_limits<streamsize> ::max(), '\n');
-			cout << "Invalid input. Please enter a valid number: "; //Komunikat o bÅ‚Ä™dzie
+			cout << "Invalid input. Please enter a valid number: "; //Komunikat o b³êdzie
 		}
 		else {
-			cin.ignore(numeric_limits<streamsize> ::max(), '\n'); //Ignorowanie reszty linii, inaczej czyÅ›ci dalszÄ… czeÅ›Ä‡ lini typu 12rahuj to masz tylko 12
+			cin.ignore(numeric_limits<streamsize> ::max(), '\n'); //Ignorowanie reszty linii, inaczej czyœci dalsz¹ czeœæ lini typu 12rahuj to masz tylko 12
 			return value; //zwraca value
 		}
 	}
@@ -77,10 +78,10 @@ double Fahr_Celsius(double fahr) {
 void Fahr_Celsius_option() {
 	double fahr;
 	cout << "Enter temperature in Fahrenheit: ";
-	fahr = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoÅ›ci
+	fahr = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoœci
 	if (Check_temp(fahr, 'F') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
-		return; //ZwrÃ³Ä‡ mi bÅ‚Ä…d
+		return; //Zwróæ mi b³¹d
 	}
 	double celsius = Fahr_Celsius(fahr);
 	cout << fahr << "F is " << celsius << "C" << endl;
@@ -93,10 +94,10 @@ double Fahr_Kelvin(double fahr) {
 void Fahr_Kelvin_option() {
 	double fahr;
 	cout << "Enter temperature in Fahrenheit: ";
-	fahr = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoÅ›ci
+	fahr = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoœci
 	if (Check_temp(fahr, 'F') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
-		return; //ZwrÃ³Ä‡ mi bÅ‚Ä…d
+		return; //Zwróæ mi b³¹d
 	}
 	double kelvin = Fahr_Kelvin(fahr);
 	cout << fahr << "F is " << kelvin << "K" << endl;
@@ -109,10 +110,10 @@ double Celsium_Fahr(double celsius) {
 void Celsium_Fahr_option() {
 	double celsius;
 	cout << "Enter temperature in Celsius: ";
-	celsius = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoÅ›ci
+	celsius = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoœci
 	if (Check_temp(celsius, 'C') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
-		return; //ZwrÃ³Ä‡ mi bÅ‚Ä…d
+		return; //Zwróæ mi b³¹d
 	}
 	double fahr = Celsium_Fahr(celsius);
 	cout << celsius << "C is " << fahr << "F" << endl;
@@ -125,10 +126,10 @@ double Celsius_Kelv(double celsius) {
 void Celsius_Kelv_option() {
 	double celsius;
 	cout << "Enter temperature in Celsius: ";
-	celsius = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoÅ›ci
+	celsius = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoœci
 	if (Check_temp(celsius, 'C') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
-		return; //ZwrÃ³Ä‡ mi bÅ‚Ä…d
+		return; //Zwróæ mi b³¹d
 	}
 	double kelvin = Celsius_Kelv(celsius);
 	cout << celsius << "C is " << kelvin << "K" << endl;
@@ -141,10 +142,10 @@ double Kelv_cels(double kelvin) {
 void Kelv_cels_option() {
 	double kelvin;
 	cout << "Enter temperature in Kelvin: ";
-	kelvin = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoÅ›ci
+	kelvin = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoœci
 	if (Check_temp(kelvin, 'K') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
-		return; //ZwrÃ³Ä‡ mi bÅ‚Ä…d
+		return; //Zwróæ mi b³¹d
 	}
 	double celsius = Kelv_cels(kelvin);
 	cout << kelvin << "K is " << celsius << "C" << endl;
@@ -157,10 +158,10 @@ double Kelvin_Fahr(double kelvin) {
 void Kelvin_Fahr_option() {
 	double kelvin;
 	cout << "Enter temperature in Kelvin: ";
-	kelvin = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoÅ›ci
+	kelvin = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoœci
 	if (Check_temp(kelvin, 'K') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
-		return; //ZwrÃ³Ä‡ mi bÅ‚Ä…d
+		return; //Zwróæ mi b³¹d
 	}
 	double fahr = Kelvin_Fahr(kelvin);
 	cout << kelvin << "K is " << fahr << "F" << endl;
@@ -181,18 +182,18 @@ void show_History() {
 		return;
 	}
 	else {
-		int index = 1, counter = 0; //Inicjalizacja zmiennych do numeracji i liczenia wpisÃ³w11
+		int index = 1, counter = 0; //Inicjalizacja zmiennych do numeracji i liczenia wpisów11
 
 		show_menu_history();
 		int deccision;
 		cout << "Enter your decision: ";
 		cin >> deccision;
-		system("cls"); // czyÅ›ci ekran konsoli
+		system("cls"); // czyœci ekran konsoli
 		switch (deccision) {
 		case 1: {
-			for (int i = 0; i < g_Data_Center; i += 2) { //Iteracja przez historiÄ™
+			for (int i = 0; i < g_Data_Center; i += 2) { //Iteracja przez historiê
 				if (g_table_units[i] == 'C') { //Sprawdzenie czy jednostka to Celsium
-					cout << index++ << ". " << g_table_history[i] << "C -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl; //WyÅ›wietlanie wpisu historii
+					cout << index++ << ". " << g_table_history[i] << "C -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl; //Wyœwietlanie wpisu historii
 					counter++;
 				}
 			}
@@ -249,29 +250,29 @@ void deleteRecords() {
 		cout << "Enter the record number to delete (or 0 to cancel): ";
 		while (true) {
 			recordNumber = get_safedouble(); //Pobieranie bezpiecznej liczby
-			if (recordNumber < 0 || recordNumber >= g_Data_Center / 2) { //Sprawdzanie czy numer rekordu jest prawidÅ‚owy
-				cout << "Invalid record number. Please try again: "; //Komunikat o bÅ‚Ä™dzie
-				cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Ignoruj poprzednie wejÅ›cie1
+			if (recordNumber < 0 || recordNumber >= g_Data_Center / 2) { //Sprawdzanie czy numer rekordu jest prawid³owy
+				cout << "Invalid record number. Please try again: "; //Komunikat o b³êdzie
+				cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Ignoruj poprzednie wejœcie1
 			}
 			else {
 				break;
 			}
 		}
 		//usuwanie rekordu
-		for (int i = (recordNumber * 2) - 2; i < g_Data_Center - 2; i++) { // Przesuwanie wpisÃ³w historii
-			g_table_history[i] = g_table_history[i + 2]; // Przesuwanie wpisÃ³w historii
+		for (int i = (recordNumber * 2) - 2; i < g_Data_Center - 2; i++) { // Przesuwanie wpisów historii
+			g_table_history[i] = g_table_history[i + 2]; // Przesuwanie wpisów historii
 			g_table_units[i] = g_table_units[i + 2]; // Przesuwanie jednostek
 		}
-		g_Data_Center -= 2; // Zmniejszenie liczby wpisÃ³w w historii
+		g_Data_Center -= 2; // Zmniejszenie liczby wpisów w historii
 		cout << "Record " << recordNumber << " deleted successfully." << endl;
 	}
 }
 void ModifyRecord() {
 	if (g_Data_Center == 0) {//Sprawdzanie czy historia jest pusta
-		cout << "No conversion records to modify." << endl; //Komunikat o braku wpisÃ³w
+		cout << "No conversion records to modify." << endl; //Komunikat o braku wpisów
 	}
 	else {
-		show_All_History(); // WyÅ›wietlanie caÅ‚ej historii
+		show_All_History(); // Wyœwietlanie ca³ej historii
 		cout << "Enter the record number to modify (or 0 to cancel): ";
 		int recordNumber;
 		cin >> recordNumber;
@@ -283,10 +284,10 @@ void ModifyRecord() {
 		switch (new_degree_type) {
 		case 'F': {
 			cout << "Enter the new temperature in Fahrenheit: ";
-			new_temperature = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoÅ›ci
+			new_temperature = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoœci
 			if (Check_temp(new_temperature, 'F') == false) {
 				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
-				return; //ZwrÃ³Ä‡ mi bÅ‚Ä…d
+				return; //Zwróæ mi b³¹d
 			}
 			cout << "Convert to which degree type? (C/K): ";
 			cin >> convert_to_type;
@@ -314,10 +315,10 @@ void ModifyRecord() {
 		}
 		case 'C': {
 			cout << "Enter the new temperature in Celsius: ";
-			new_temperature = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoÅ›ci
+			new_temperature = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoœci
 			if (Check_temp(new_temperature, 'C') == false) {
 				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
-				return; //ZwrÃ³Ä‡ mi bÅ‚Ä…d
+				return; //Zwróæ mi b³¹d
 			}
 			cout << "Convert to which degree type? (F/K): ";
 			cin >> convert_to_type;
@@ -346,10 +347,10 @@ void ModifyRecord() {
 		}
 		case 'K': {
 			cout << "Enter the new temperature in Kelvin: ";
-			new_temperature = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoÅ›ci
+			new_temperature = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartoœci
 			if (Check_temp(new_temperature, 'K') == false) {
 				cout << "Modification aborted due to invalid temperature (Not in range)." << endl;
-				return; //ZwrÃ³Ä‡ mi bÅ‚Ä…d
+				return; //Zwróæ mi b³¹d
 			}
 			cout << "Convert to which degree type? (C/F): ";
 			cin >> convert_to_type;
@@ -392,13 +393,13 @@ void Fill_History_Random_Values() {
 	cout << "Enter the number of random records to add (max " << (100 - g_Data_Center) / 2 << "): ";
 	cin >> recordsToAdd;
 
-	if (recordsToAdd <1 || recordsToAdd >(100 - g_Data_Center) / 2) { // Sprawdzanie czy liczba rekordÃ³w jest prawidÅ‚owa
+	if (recordsToAdd <1 || recordsToAdd >(100 - g_Data_Center) / 2) { // Sprawdzanie czy liczba rekordów jest prawid³owa
 		cout << "Invalid number of records." << endl;
 		return;
 	}
 
-	if (g_Data_Center + recordsToAdd > 100) { // Sprawdzanie czy dodanie rekordÃ³w przekroczy limit
-		int possibleToAdd = (100 - g_Data_Center) / 2; // Obliczanie ile rekordÃ³w moÅ¼na dodaÄ‡
+	if (g_Data_Center + recordsToAdd > 100) { // Sprawdzanie czy dodanie rekordów przekroczy limit
+		int possibleToAdd = (100 - g_Data_Center) / 2; // Obliczanie ile rekordów mo¿na dodaæ
 		cout << "Not enough space in history. Can only add " << possibleToAdd << " records." << endl;
 		cout << "Generating " << possibleToAdd << "instead (y/n)?";
 		char choice;
@@ -418,7 +419,7 @@ void Fill_History_Random_Values() {
 		char degreeType;
 		char convertToType;
 
-		int randomchoice = rand() % 3; // Losowy wybÃ³r jednostki poczÄ…tkowej
+		int randomchoice = rand() % 3; // Losowy wybór jednostki pocz¹tkowej
 		if (randomchoice == 0) { //Celsium
 			degreeType = 'C';
 		}
@@ -432,22 +433,22 @@ void Fill_History_Random_Values() {
 		case 'F': {
 			randomtemperature = rand() % 1000 - 459; // Losowa temperatura w zakresie od -459 do 540
 			temperature = static_cast <float> (randomtemperature); // Konwersja na double
-			converted_temp = (rand() % 2 == 0) ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybÃ³r jednostki docelowej
-			convertToType = (degreeType == 'C') ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybÃ³r jednostki docelowej
+			converted_temp = (rand() % 2 == 0) ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybór jednostki docelowej
+			convertToType = (degreeType == 'C') ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybór jednostki docelowej
 			break;
 		}
 		case 'C': {
 			randomtemperature = rand() % 500 - 273; // Losowa temperatura w zakresie od -273 do 226
 			temperature = static_cast <float> (randomtemperature); // Konwersja na double
-			converted_temp = (rand() % 2 == 0) ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybÃ³r jednostki docelowej
-			convertToType = (degreeType == 'F') ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybÃ³r jednostki docelowej
+			converted_temp = (rand() % 2 == 0) ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybór jednostki docelowej
+			convertToType = (degreeType == 'F') ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybór jednostki docelowej
 			break;
 		}
 		case 'K': {
 			randomtemperature = rand() % 500; // Losowa temperatura w zakresie od 0 do 499
 			temperature = static_cast <float> (randomtemperature); // Konwersja na double
-			converted_temp = (rand() % 2 == 0) ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybÃ³r jednostki docelowej
-			convertToType = (degreeType == 'C') ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybÃ³r jednostki docelowej
+			converted_temp = (rand() % 2 == 0) ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybór jednostki docelowej
+			convertToType = (degreeType == 'C') ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybór jednostki docelowej
 			break;
 		}
 		}

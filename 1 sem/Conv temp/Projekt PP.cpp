@@ -10,7 +10,7 @@ using namespace std;  //Żeby nie pisac std::
 
 int main() {
 	int prime = 1; //Żaby była pętla nieskonczona
-	while (prime == 1) { //Pętla nieskończona
+	while (prime == 1) { //Pętla nieskończona	
 		int decision; // deklaracja zmiennej decyzji
 		system("cls"); // czyści ekran konsoli
 		cout << "Convert temperature" << endl;

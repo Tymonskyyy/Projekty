@@ -8,6 +8,7 @@ extern int g_Data_Center; // zmienna do przechowywania liczby wpisów w historii
 
 // Prototypy funkcji 
 bool Check_temp(double temp_value, char unit_type); // Funkcja do sprawdzania czy temperatura nie jest ponizej zera absolutnego
+double get_safedouble(); //Deklaracja funkcji do pobierania bezpiecznej liczby zmiennoprzecinkowej
 void Save_to_history(double temperature1, char degreeType1, double temperature2, char degreeType2); // Funkcja do zapisywania konwersji do historii
  
 // Funkcje konwersji
@@ -35,6 +36,6 @@ void ModifyRecord(); //Funkcja do modyfikowania rekordu w historii
 void Fill_History_Random_Values(); //Funkcja do wypełniania historii losowymi wartościami
 
 //Zabezpiecznie do pobierania bezpiecznej liczby zmiennoprzecinkowej
-double get_safedouble(); 
+
 
 #endif
