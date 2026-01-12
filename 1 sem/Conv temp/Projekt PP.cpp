@@ -10,7 +10,6 @@ using namespace std;  //Żeby nie pisac std::
 
 int main() {
 	int prime = 1; //Żaby była pętla nieskonczona
-	double result;
 	while (prime == 1) { //Pętla nieskończona
 		int decision; // deklaracja zmiennej decyzji
 		system("cls"); // czyści ekran konsoli

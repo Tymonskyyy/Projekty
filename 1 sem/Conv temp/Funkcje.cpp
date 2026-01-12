@@ -46,9 +46,9 @@ double get_safedouble() {
 	double value; // Deklaracja zmiennej do przechowywania wartości
 	while (true) {
 		cin >> value; // Pobranie wartości od użytkownika
-		if(cin.fail()) { //Sprawdzanie czy nie wpisano złej warotści typu liczba = cyfra
+		if (cin.fail()) { //Sprawdzanie czy nie wpisano złej warotści typu liczba = cyfra
 			cin.clear(); //czyszczenie cina
-			cin.ignore(numeric_limits<streamsize> :: max(), '\n';);
+			cin.ignore(numeric_limits<streamsize> ::max(), '\n');
 			cout << "Invalid input. Please enter a valid number: "; //Komunikat o błędzie
 		}
 		else {
@@ -109,7 +109,7 @@ double Celsium_Fahr(double celsius) {
 void Celsium_Fahr_option() {
 	double celsius;
 	cout << "Enter temperature in Celsius: ";
-	celcius = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
+	celsius = get_safedouble(); //zabezpieczenie do popbierania odpowiedniej wartości
 	if (Check_temp(celsius, 'C') == false) {
 		cout << "Conversion aborted due to invalid temperature (Not in range)." << endl;
 		return; //Zwróć mi błąd
@@ -248,7 +248,7 @@ void deleteRecords() {
 		int recordNumber;
 		cout << "Enter the record number to delete (or 0 to cancel): ";
 		while (true) {
-			recordNUmber = get_safedouble(); //Pobieranie bezpiecznej liczby
+			recordNumber = get_safedouble(); //Pobieranie bezpiecznej liczby
 			if (recordNumber < 0 || recordNumber >= g_Data_Center / 2) { //Sprawdzanie czy numer rekordu jest prawidłowy
 				cout << "Invalid record number. Please try again: "; //Komunikat o błędzie
 				cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Ignoruj poprzednie wejście1
