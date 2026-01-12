@@ -26,6 +26,7 @@ int main() {
 		cout << "7. History" <<endl;
 		cout << "8. Delete record from History" << endl;
 		cout << "9. Modify record in History" << endl;
+		cout << "10. Fill History with random values" << endl;
 		cout << "-1. Exit" << endl;
 		cout << "------------------------" << endl;
 		cout << "Enter your decision: ";
@@ -73,7 +74,7 @@ int main() {
 			break;
 		}
 		case 10: {
-			//fill_History_random_Values();
+			Fill_History_Random_Values();
 			break;
 		}
 		default: {

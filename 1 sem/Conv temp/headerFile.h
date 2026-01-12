@@ -164,7 +164,7 @@ void show_History() {
 		return;
 	}
 	else {
-		int index = 1, counter = 0;
+		int index = 1, counter = 0; //Inicjalizacja zmiennych do numeracji i liczenia wpisów11
 
 		show_menu_history();
 		int deccision;
@@ -366,6 +366,75 @@ void ModifyRecord() {
 		}
 	}
 }
-/*void Fill_History_Random_Values() {
+void Fill_History_Random_Values() {
+	if (g_Data_Center >= 100) {
+		cout << "Conversion history is full!" << endl;
+		return;
+	}
+	int recordsToAdd;
+	cout << "Enter the number of random records to add (max " << (100 - g_Data_Center) / 2 << "): ";
+	cin >> recordsToAdd;
 
-}*/
+	if (recordsToAdd <1 || recordsToAdd >(100 - g_Data_Center) / 2) { // Sprawdzanie czy liczba rekordów jest prawidłowa
+		cout << "Invalid number of records." << endl; 
+		return;
+	}
+
+	if (g_Data_Center + recordsToAdd > 100) { // Sprawdzanie czy dodanie rekordów przekroczy limit
+		int possibleToAdd = (100 - g_Data_Center) / 2; // Obliczanie ile rekordów można dodać
+		cout << "Not enough space in history. Can only add " << possibleToAdd << " records." << endl; 
+		cout << "Generating " << possibleToAdd << "instead (y/n)?";
+		char choice;
+		cin >> choice;
+		if (choice == 'y' || choice == 'Y') {
+			recordsToAdd = possibleToAdd;
+		}
+		else {
+			return;
+		}
+	}
+	srand(time(nullptr)); // Inicjalizacja generatora liczb losowych
+	for (int i = 0; i < recordsToAdd; i++) {
+		int randomtemperature;
+		double converted_temp;
+		double temperature;
+		char degreeType;
+		char convertToType;
+
+		int randomchoice = rand() % 3; // Losowy wybór jednostki początkowej
+		if (randomchoice == 0 )  { //Celsium
+			degreeType = 'C';
+		}
+		else if (randomchoice == 1) { //Fahrenheita
+			degreeType = 'F';
+		}
+		else { //Kelvina
+			degreeType = 'K';
+		}
+		switch (degreeType) {
+		case 'F': {
+			randomtemperature = rand() % 1000 - 459; // Losowa temperatura w zakresie od -459 do 540
+			temperature = static_cast <float> (randomtemperature); // Konwersja na double
+			converted_temp = (rand() % 2 == 0) ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybór jednostki docelowej
+			convertToType = (degreeType == 'C') ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybór jednostki docelowej
+			break;
+			}
+		case 'C': {
+			randomtemperature = rand() % 500 - 273; // Losowa temperatura w zakresie od -273 do 226
+			temperature = static_cast <float> (randomtemperature); // Konwersja na double
+			converted_temp = (rand() % 2 == 0) ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybór jednostki docelowej
+			convertToType = (degreeType == 'F') ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybór jednostki docelowej
+			break;
+			}
+		case 'K': {
+			randomtemperature = rand() % 500; // Losowa temperatura w zakresie od 0 do 499
+			temperature = static_cast <float> (randomtemperature); // Konwersja na double
+			converted_temp = (rand() % 2 == 0) ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybór jednostki docelowej
+			convertToType = (degreeType == 'C') ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybór jednostki docelowej
+			break;
+			}
+		}
+		Save_to_history(temperature, converted_temp, degreeType, convertToType);
+	}
+	cout << "Random records added successfully." << endl;
+}
