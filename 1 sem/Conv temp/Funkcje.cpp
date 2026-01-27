@@ -1,11 +1,11 @@
-#include <iostream>
-#include <limits>
-#include <random>
-#include <stdlib.h>
+#include <iostream> // Biblioteka do wejœcia/wyjœcia
+#include <limits>	// Biblioteka do obs³ugi limitów
+#include <random> // Biblioteka do generowania liczb losowych
+#include <stdlib.h> // Potrzebne do system("cls")
 #include <time.h>   // Potrzebne do time(nullptr)
 #include <limits> // <-- To jest kluczowe dla numeric_limits
 #include "headerFile.h" // Musimy do³¹czyæ nasz nag³ówek!
-using namespace std;
+using namespace std; 
 // Definicje zmiennych globalnych rezerwacja pamiêci dla nich
 double g_table_history[100]; // tablica do przechowywania historii konwersji
 char g_table_units[100]; // tablica do przechowywania jednostek konwersji
@@ -15,22 +15,22 @@ bool Check_temp(double temp_value, char unit_type) { //Funkcja do sprawdzania cz
 	//Sprawdzanie czy temperatura nie jest ponizej zera absolutnego
 	switch (unit_type) { //Switch do wyboru decyzji ¿eby sprawdziæ odpowiedni¹ temperaturê
 		//Do danej decyzji sprawdzamy czy nie zrobi³ u¿ytkownik b³edu
-	case 'F': {
-		if (temp_value < -459.67) {
+	case 'F': { 
+		if (temp_value < -459.67) { //totalne 0 dla fahrenheita
 			cout << "Error: Temperature below absolute zero!" << endl;
 			return false;
 		}
 		break;
 	}
 	case 'C': {
-		if (temp_value < -273.15) {
-			cout << "Error: Temperature below absolute zero!" << endl;
+		if (temp_value < -273.15) { //totalne 0 dla celsium
+ 			cout << "Error: Temperature below absolute zero!"<< endl;
 			return false;
 		}
 		break;
 	}
 	case 'K': {
-		if (temp_value < 0) {
+		if (temp_value < 0) { //totalne 0 dla kelvina
 			cout << "Error: Temperature below absolute zero!" << endl;
 			return false;
 		}
@@ -43,13 +43,13 @@ bool Check_temp(double temp_value, char unit_type) { //Funkcja do sprawdzania cz
 	}
 	return true; //Zwracanie prawdy jeœli temperatura jest powy¿ej zera absolutnego
 }
-double get_safedouble() {
+double get_safedouble() { //Funkcja do pobierania bezpiecznej liczby zmiennoprzecinkowej
 	double value; // Deklaracja zmiennej do przechowywania wartoœci
 	while (true) {
 		cin >> value; // Pobranie wartoœci od u¿ytkownika
 		if (cin.fail()) { //Sprawdzanie czy nie wpisano z³ej warotœci typu liczba = cyfra
 			cin.clear(); //czyszczenie cina
-			cin.ignore(numeric_limits<streamsize> ::max(), '\n');
+			cin.ignore(numeric_limits<streamsize> ::max(), '\n'); //Ignorowanie reszty linii
 			cout << "Invalid input. Please enter a valid number: "; //Komunikat o b³êdzie
 		}
 		else {
@@ -60,12 +60,12 @@ double get_safedouble() {
 } //Deklaracja funkcji do pobierania bezpiecznej liczby zmiennoprzecinkowej
 
 void Save_to_history(double temperature1, char degreeType1, double temperature2, char degreeType2) {
-	if (g_Data_Center < 100) {
-		g_table_history[g_Data_Center] = temperature1;
-		g_table_history[g_Data_Center + 1] = temperature2;
-		g_table_units[g_Data_Center] = degreeType1;
-		g_table_units[g_Data_Center + 1] = degreeType2;
-		g_Data_Center += 2;
+	if (g_Data_Center < 100) { //Sprawdzanie czy jest miejsce w historii
+		g_table_history[g_Data_Center] = temperature1; //Zapis do historii temperatury 1
+		g_table_history[g_Data_Center + 1] = temperature2; //Zapis do historii temperatury 2
+		g_table_units[g_Data_Center] = degreeType1; //Zapis do historii jednostki 1
+		g_table_units[g_Data_Center + 1] = degreeType2; //Zapis do historii jednostki 2
+		g_Data_Center += 2; //Zwiêkszenie liczby wpisów w historii
 	}
 	else {
 		cout << "Conversion history is full!" << endl;
@@ -169,12 +169,12 @@ void Kelvin_Fahr_option() {
 	Save_to_history(kelvin, 'K', fahr, 'F');
 }
 void show_menu_history() {
-	cout << "Conversion History:" << endl;
+	cout << "Conversion History: (1-4)" << endl;
 	cout << "------------------------" << endl;
-	cout << "Celsius (C)" << endl;
-	cout << "Fahrenheit (F)" << endl;
-	cout << "Kelvin (K)" << endl;
-	cout << "All (A)" << endl;
+	cout << "1. Celsius (C) " << endl;
+	cout << "2. Fahrenheit (F)" << endl;
+	cout << "3. Kelvin (K)" << endl;
+	cout << "4. All (A)" << endl;
 }
 void show_History() {
 	if (g_Data_Center == 0) {
@@ -432,6 +432,7 @@ void Fill_History_Random_Values() {
 		switch (degreeType) {
 		case 'F': {
 			randomtemperature = rand() % 1000 - 459; // Losowa temperatura w zakresie od -459 do 540
+			temperature = 'F';
 			temperature = static_cast <float> (randomtemperature); // Konwersja na double
 			converted_temp = (rand() % 2 == 0) ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybór jednostki docelowej
 			convertToType = (degreeType == 'C') ? Fahr_Celsius(temperature) : Fahr_Kelvin(temperature); // Losowy wybór jednostki docelowej
@@ -439,6 +440,7 @@ void Fill_History_Random_Values() {
 		}
 		case 'C': {
 			randomtemperature = rand() % 500 - 273; // Losowa temperatura w zakresie od -273 do 226
+			temperature = 'C';
 			temperature = static_cast <float> (randomtemperature); // Konwersja na double
 			converted_temp = (rand() % 2 == 0) ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybór jednostki docelowej
 			convertToType = (degreeType == 'F') ? Celsium_Fahr(temperature) : Celsius_Kelv(temperature); // Losowy wybór jednostki docelowej
@@ -447,12 +449,70 @@ void Fill_History_Random_Values() {
 		case 'K': {
 			randomtemperature = rand() % 500; // Losowa temperatura w zakresie od 0 do 499
 			temperature = static_cast <float> (randomtemperature); // Konwersja na double
+			temperature = 'K';
 			converted_temp = (rand() % 2 == 0) ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybór jednostki docelowej
 			convertToType = (degreeType == 'C') ? Kelv_cels(temperature) : Kelvin_Fahr(temperature); // Losowy wybór jednostki docelowej
 			break;
 		}
 		}
-		Save_to_history(temperature, degreeType, convertToType, converted_temp);
+		Save_to_history(temperature, degreeType , converted_temp, degreeType);
 	}
 	cout << "Random records added successfully." << endl;
 }
+void podzielne_przez_5() {
+	int temperatura;
+
+	cout << "Wyœwietlanie historii podzielnej przez 5" << endl;
+	cout << "------------------------" << endl;
+	cout << "1. Celsius (C) " << endl;
+	cout << "2. Fahrenheit (F)" << endl;
+	cout << "3. Kelvin (K)" << endl;
+	cin >> temperatura;
+	int index = 1;
+	int counter = 0;
+	int i = 0;
+
+	switch (temperatura) {
+	case 1: {
+
+
+		for (int i = 0; i < g_Data_Center; i += 2) { //Iteracja przez historiê
+			if ((int)g_table_history[i] % 5 == 0) {
+				if (g_table_units[i] == 'C') { //Sprawdzenie czy jednostka to Celsium
+					cout << index++ << ". " << g_table_history[i] << "C -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl; //Wyœwietlanie wpisu historii
+					counter++;
+				}
+			}
+		}
+		break;
+	}
+	case 2: {
+		for (int i = 0; i < g_Data_Center; i += 2) {
+			if ((int)g_table_history[i] % 5 == 0) {
+				if ((int)g_table_history % 5 == 0) {
+					if (g_table_units[i] == 'F') {
+						cout << index++ << ". " << g_table_history[i] << "F -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl;
+						counter++;
+					}
+				}
+			}
+		}
+		break;
+	}
+	case 3: {
+		for (int i = 0; i < g_Data_Center; i += 2) {
+			if ((int)g_table_history[i] % 5 == 0) {
+				if (g_table_units[i] == 'K') {
+					cout << index++ << ". " << g_table_history[i] << "K -> " << g_table_history[i + 1] << g_table_units[i + 1] << endl;
+					counter++;
+				}
+			}
+		}
+		break;
+	}
+
+	}
+}
+
+
+

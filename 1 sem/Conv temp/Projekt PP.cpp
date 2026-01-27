@@ -26,6 +26,7 @@ int main() {
 		cout << "8. Delete record from History" << endl;
 		cout << "9. Modify record in History" << endl;
 		cout << "10. Fill History with random values" << endl;
+		cout << "11. Podzielne przez 5" << endl;
 		cout << "-1. Exit" << endl;
 		cout << "------------------------" << endl;
 		cout << "Enter your decision: ";
@@ -33,7 +34,7 @@ int main() {
 		system("cls"); // czyści ekran konsoli
 		//decyzje które kto chce convertować.
 		if (decision == -1) {
-			return 0;
+			return 0; //Zakończenie programu
 		}
 		switch (decision) {
 		case 1: {
@@ -74,6 +75,10 @@ int main() {
 		}
 		case 10: {
 			Fill_History_Random_Values();
+			break;
+		}
+		case 11: {
+			podzielne_przez_5();
 			break;
 		}
 		default: {

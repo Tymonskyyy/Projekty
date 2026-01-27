@@ -1,5 +1,6 @@
 ﻿#ifndef HEADERFILE_H // Zabezpieczenie przed wielokrotnym dołączeniem
 #define HEADERFILE_H 
+/*Pliki headerFile.h przechowuje tylko zawijmy to wywoływacze funkcji które mają ciało w innym pliku. To jest tak samo jakbyś miał wołać na impreze do kumpla gdzieś inndziej*/
 
 // Deklaracje zmiennych globalnych (extern oznacza: szukaj ich w pliku .cpp)
 extern double g_table_history[100]; // tablica do przechowywania historii konwersji
@@ -26,6 +27,8 @@ void Celsium_Fahr_option(); //Funkcja obsługi opcji C na F
 void Celsius_Kelv_option(); //Funkcja obsługi opcji C na K
 void Kelv_cels_option(); //Funkcja obsługi opcji K na C
 void Kelvin_Fahr_option(); //Funkcja obsługi opcji K na F
+void podzielne_przez_5(); // Funkcja do sprawdzania podzielnego przez 
+
 
 // Funkcje historii
 void show_menu_history(); //Funkcja do wyświetlania menu historii
